@@ -12,8 +12,16 @@ import Exceptions.InternalErrorException;
 
 public abstract class ComponentBlock {
 	
+	/**
+	 * Counts the number of columns that
+	 * have been output from the current row 
+	 * being printed 
+	 */
 	protected static int cols_printed;
 	
+	/**
+	 * The coordinate of the top left corner of the block 
+	 */
 	protected Position position;
 	
 	protected CoMoMBasis basis;
