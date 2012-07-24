@@ -41,12 +41,21 @@ public class BTFLinearSystem extends LinearSystem {
 		
 		super(qnm, basis);		
 		
-		//Generate the matrix components
+		//Create and initialise the component blocks for the final class
 		x_block  = new XBlock (qnm, basis);
+		x_block.initialise();
+		
 		y_block  = new YBlock (qnm, basis);
+		y_block.initialise();
+		
 		b1_block = new B1Block(qnm, basis);
+		b1_block.initialise();
+		
 		b2_block = new B2Block(qnm, basis);
+		b2_block.initialise();
+		
 		c_block  = new CBlock (qnm, basis);	
+		c_block.initialise();
 		
 		//Add PCs and CEs to the matrices 
 		generate();
@@ -85,17 +94,9 @@ public class BTFLinearSystem extends LinearSystem {
 		
 		current_N.plusOne(current_class);
 		basis.initialiseForClass(current_class);
-		ComponentBlock.setCurrentClassPopulation(1);
+		ComponentBlock.setCurrentClassPopulation(1);		
 		
-		/*
-		//Construct current_class matrix components from full matrices 
-		x  = new XBlock (  x_block, current_class);
-		y  = new YBlock (  y_block, current_class);
-		b1 = new B1Block( b1_block, current_class);
-		b2 = new B2Block( b2_block, current_class);
-		c  = new CBlock (  c_block, current_class);
-		*/
-		
+		//create sub-blocks for the current class
 		x  = (XBlock)   x_block.subBlock(current_class);
 		y  = (YBlock)   y_block.subBlock(current_class);
 		b1 = (B1Block) b1_block.subBlock(current_class);

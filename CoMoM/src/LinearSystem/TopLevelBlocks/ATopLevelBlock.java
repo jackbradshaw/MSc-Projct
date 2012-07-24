@@ -20,8 +20,7 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	protected ATopLevelBlock(QNModel qnm, CoMoMBasis basis, Position position)
 			throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		super(qnm, basis, position);
-		selection_policy = new TypeOneBlocks(qnm, this, current_class);
-		initialiseSecondaryMacroBlocks();
+		selection_policy = new TypeOneBlocks(qnm, this, current_class);		
 	}		
 	
 	/**
@@ -43,6 +42,19 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 		}
 		
 		return sub_block;
+	}
+	
+	/**
+	 * initialise() overriden to further create list of SecondaryMacroBlocks
+	 */
+	@Override
+	public void initialise() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+		
+		//Initialise macro_blocks as super class
+		super.initialise();
+		
+		//Initialise sec_macro_blocks
+		initialiseSecondaryMacroBlocks();
 	}
 
 	private void initialiseSecondaryMacroBlocks() throws BTFMatrixErrorException {

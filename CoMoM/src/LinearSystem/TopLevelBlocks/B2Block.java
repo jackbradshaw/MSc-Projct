@@ -38,10 +38,4 @@ public class B2Block extends TopLevelBlock {
 		macro_blocks[h] = new B2MacroBlock(qnm, basis, block_position, h);
 
 	}
-
-	@Override
-	protected MacroBlock SubMacroBlock(TopLevelBlock full_block, int index) {
-		return new B2MacroBlock(full_block.macro_blocks[index], current_class);		
-	}
-
 }

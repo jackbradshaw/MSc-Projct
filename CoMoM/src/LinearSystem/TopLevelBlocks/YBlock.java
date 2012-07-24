@@ -39,11 +39,6 @@ public class YBlock extends ATopLevelBlock {
 		Position block_position = new Position(block_2.getStartingRow(), block_1.getStartingCol());
 		sec_macro_blocks[h] = new YSecondaryMacroBlock(qnm, basis, block_position, block_1, block_2);
 	}
-
-	@Override
-	protected MacroBlock SubMacroBlock(TopLevelBlock full_block, int index) {
-		return new YMacroBlock(full_block.macro_blocks[index], current_class);		
-	}
 	
 	@Override
 	public void printRow2(int row) {

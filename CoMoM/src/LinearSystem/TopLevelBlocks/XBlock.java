@@ -54,10 +54,4 @@ public class XBlock extends ATopLevelBlock {
 			sec_macro_blocks[i].printRow2(row);
 		}
 	}
-
-	@Override
-	protected MacroBlock SubMacroBlock(TopLevelBlock full_block, int index) {
-		return new XMacroBlock(full_block.macro_blocks[index], current_class);
-		
-	} 
 }

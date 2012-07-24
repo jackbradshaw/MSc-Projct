@@ -34,11 +34,4 @@ public class CBlock extends TopLevelBlock {
 	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		macro_blocks[h] = new CMacroBlock(qnm, basis, block_position, h);
 	}
-
-	@Override
-	protected MacroBlock SubMacroBlock(TopLevelBlock full_block, int index) {
-		return new CMacroBlock(full_block.macro_blocks[index], current_class);
-
-	}
-
 }

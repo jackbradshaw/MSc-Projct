@@ -15,17 +15,37 @@ import LinearSystem.MacroBlocks.MacroBlock;
 
 public abstract class TopLevelBlock extends ComponentBlock {
 
+	/**
+	 * The list of Macro Blocks contained in the TopLevelBlock
+	 */
 	protected MacroBlock[] macro_blocks;
 	
+	/**
+	 * Encapsulated policy for selecting macro blocks when 
+	 * creating sub-blocks for lower classes
+	 */
 	protected MacroBlockSelectionPolicy selection_policy;
 	
+	
+	/**
+	 * Constructor - First phase of construction
+	 * 
+	 * Initialises everything up to the list of macro blocks
+	 * @see TopLevelBlock#initialise() initialise()
+	 * 
+	 * @param qnm The Model under consideration
+	 * @param basis The corresponding basis for the model
+	 * @param position The starting position (top right hand corner) of the block
+	 * @throws BTFMatrixErrorException
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
 	protected TopLevelBlock(QNModel qnm, CoMoMBasis basis, Position position) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
-		super(qnm, basis, position);
-		initialise();
+		super(qnm, basis, position);		
 	}
 		
 	/**
-	 * Constructor for lower classes	 
+	 * Copy Constructor	 
 	 */
 	protected TopLevelBlock(TopLevelBlock full_block, int current_class) {
 		super(full_block, current_class);
@@ -33,8 +53,18 @@ public abstract class TopLevelBlock extends ComponentBlock {
 		this.current_class = current_class;		
 	}
 	
-	private void initialise() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+	/**
+	 * Second Phase of Construction
+	 * 
+	 * This method intialises the list component macro blocks.
+	 *  
+	 * @throws BTFMatrixErrorException
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
+	public void initialise() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		
+		//Calculate the number of macro blocks the top level block will contain
 		int number_of_macro_blocks = (qnm.R - 1 < qnm.M ? qnm.R - 1: qnm.M) + 1;
 		
 		macro_blocks = new MacroBlock[number_of_macro_blocks];
@@ -51,10 +81,43 @@ public abstract class TopLevelBlock extends ComponentBlock {
 		size = block_position;
 	}	
 	
+	/**
+	 * Factory Method for Macro Blocks
+	 * 
+	 * To be overridden by subclasses in order to create the appropriate
+	 * subclass of MacroBlock in the parallel hierarchy. 
+	 * 
+	 * @param position Starting position for the new macro block
+	 * @param h Number of non-zeros associated with the macro block
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
 	protected abstract void addMacroBlock(Position position, int h) throws InternalErrorException, InconsistentLinearSystemException;
 	
+	/**
+	 * Factory Method for sub-block creation
+	 * 
+	 * This method is to be overridden by subclasses to instantiate a copy
+	 * of the current block of correct type
+	 * 
+	 * @param current_class The class for which the copy is created
+	 * @return A shallow copy of calling block, for the current_class. Without macro blocks.
+	 * 
+	 * @throws BTFMatrixErrorException
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
 	protected abstract TopLevelBlock subBlockCopy(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException;
 	
+	/**
+	 * Builder method that encapsulates the creation of sub-TopLevelBlocks
+	 * 
+	 * @param current_class The class for which the copy is created
+	 * @return A shallow copy of calling block, containing the correct macro blocks for the current_class
+	 * @throws BTFMatrixErrorException
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
 	public TopLevelBlock subBlock(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		
 		//Create a shallow copy of the current full block
@@ -64,26 +127,38 @@ public abstract class TopLevelBlock extends ComponentBlock {
 		sub_block.macro_blocks = selection_policy.selectMacroBlocks(current_class);
 		
 		return sub_block;
-	}
+	}	
 	
-	protected abstract MacroBlock SubMacroBlock(TopLevelBlock full_block, int index);
 	
+	/**
+	 * Finds the macro which contains a specified column (row) 
+	 * @param position The number of the column (row)
+	 * @return The index of containing MacroBlock in the list <code>macro_blocks</code>
+	 * @throws BTFMatrixErrorException
+	 */
 	protected int findMacroBlock(int position) throws BTFMatrixErrorException {
 
+		//Invalid position passed:
 		if(position < 0) throw new  BTFMatrixErrorException("Trying to find macro block containing index: " + position);
 		
 		int block = 0;
 		
+		//Linear Search to locate containing MacroBlock //TODO binary search
 		for(int i = 1; i < macro_blocks.length; i++) {
 			if(position >= (macro_blocks[i].getStartingRow())) {
 				block++;
 			}
 		}
 		
+		//Invalid positon passed, size of block overshot!
 		if(block >=  macro_blocks.length) throw new  BTFMatrixErrorException("Ran out of macro blocks! position = " + position);
 		
 		return block;
 	}
+	
+	/*
+	 * OVERRIDEN METHODS FROM COMPONENT BLOCK...
+	 */
 	
 	@Override
 	public int addCE(int position, PopulationChangeVector n, int queue) throws BTFMatrixErrorException, InternalErrorException {
@@ -119,6 +194,5 @@ public abstract class TopLevelBlock extends ComponentBlock {
 		for(int i = 0; i < macro_blocks.length; i++) {
 			macro_blocks[i].printRow2(row);
 		}
-	}
-	
+	}	
 }
