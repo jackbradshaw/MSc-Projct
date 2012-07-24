@@ -17,6 +17,8 @@ public abstract class TopLevelBlock extends ComponentBlock {
 
 	protected MacroBlock[] macro_blocks;
 	
+	protected MacroBlockSelectionPolicy selection_policy;
+	
 	protected TopLevelBlock(QNModel qnm, CoMoMBasis basis, Position position) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		super(qnm, basis, position);
 		initialise();
@@ -29,6 +31,8 @@ public abstract class TopLevelBlock extends ComponentBlock {
 		super(full_block, current_class);
 		
 		this.current_class = current_class;		
+		
+		macro_blocks = full_block.selection_policy.selectMacroBlocks(current_class);
 	}
 	
 	private void initialise() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
@@ -44,39 +48,11 @@ public abstract class TopLevelBlock extends ComponentBlock {
 			addMacroBlock(block_position.copy(), h);
 			block_position.add(macro_blocks[h].size());
 		}
+		
+		//Store the size of the block
+		size = block_position;
 	}	
 	
-	/**
-	 * Method to be called by subclasses
-	 * @param full_block
-	 * @param current_class
-	 */
-	final protected void takeLeadingMacroBlocks(TopLevelBlock full_block, int current_class) {
-		
-		int number_of_macro_blocks = (current_class - 1 < qnm.M ? current_class - 1: qnm.M) + 1;
-		
-		//Take required macro blocks
-		macro_blocks = new MacroBlock[number_of_macro_blocks];
-		for(int i = 0; i < macro_blocks.length; i++) {
-			macro_blocks[i] = SubMacroBlock(full_block, i);
-		}
-	}
-	
-	/**
-	 * Method to be called by subclasses
-	 * @param full_block
-	 * @param current_class
-	 */
-	final protected void takeTailMacroBlocks(TopLevelBlock full_block, int current_class) {		
-		//Don't need to take h = 0 macro block
-		//Take required macro blocks
-		macro_blocks = new MacroBlock[full_block.macro_blocks.length - 1];
-		for(int i = 0; i < macro_blocks.length; i++) {
-			macro_blocks[i] = SubMacroBlock(full_block, i + 1);
-		}
-	}
-
-
 	protected abstract void addMacroBlock(Position position, int h) throws InternalErrorException, InconsistentLinearSystemException;
 	
 	protected abstract MacroBlock SubMacroBlock(TopLevelBlock full_block, int index);

@@ -66,6 +66,7 @@ public class LinearSystemTest {
 		}
 		*/
 		//print b1
+		/*
 		System.out.print("B1: \n\n");
 		for(int row = 0; row < Y_starting_col; row++) {
 			b1_matrix.printRow(row, 0, basis.getSize());
@@ -125,6 +126,7 @@ public class LinearSystemTest {
 		CBlock C2 = new CBlock(C, c_class);
 		
 		carryTest(C2, c_class);
+		*/
 	}
 
 	private void generate(XBlock tl_matrix, YBlock tr_matrix, B1Block b1_matrix) throws BTFMatrixErrorException, InternalErrorException {

@@ -26,7 +26,7 @@ public class BTFLinearSystem extends LinearSystem {
 	B2Block b2_block;
 	CBlock c_block;
 	
-	//Current Matric Components
+	//Current Matrix Components
 	XBlock x;
 	YBlock y;
 	B1Block b1;

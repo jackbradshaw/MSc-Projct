@@ -19,7 +19,7 @@ public class CMicroBlock extends MicroBlock {
 	public CMicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InternalErrorException {
 		super(qnm, basis, position, h);	
 		computeDimensions();
-		array = new int[rows][2]; 
+		array = new int[size.row][2]; 
 		initialise();
 	}
 	
@@ -62,8 +62,8 @@ public class CMicroBlock extends MicroBlock {
 	@Override
 	protected void computeDimensions() {
 		//Need to consider queues 1,..,M and no queue for each n (i.e. M + 1)
-		rows = MiscFunctions.binomialCoefficient(qnm.M, h) * (qnm.M + 1);
-		cols = 0;
+		size.row = MiscFunctions.binomialCoefficient(qnm.M, h) * (qnm.M + 1);
+		size.col = 0;
 	}
 
 	@Override
@@ -83,25 +83,18 @@ public class CMicroBlock extends MicroBlock {
 			throws BTFMatrixErrorException, InternalErrorException {
 		return position;
 	}
-
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		// TODO Auto-generated method stub
-
-	}
-
 	
 	@Override
 	public void multiply(BigRational[] result, BigRational[] input)
 			throws BTFMatrixErrorException {
 		//negative population, constant is zero
 		if(_class > current_class) {
-			for(int i = 0; i < rows; i++) {
+			for(int i = 0; i < size.row; i++) {
 				result[array[i][0]] = BigRational.ZERO;
 			}
 		//carry forward
 		} else {
-			for(int i = 0; i < rows; i++) {				
+			for(int i = 0; i < size.row; i++) {				
 				result[array[i][0]] = input[array[i][1]].copy();
 			}
 		}
@@ -111,12 +104,12 @@ public class CMicroBlock extends MicroBlock {
 	public void solve(BigRational[] rhs) {
 		//negative population, constant is zero
 		if(_class > current_class) {
-			for(int i = 0; i < rows; i++) {
+			for(int i = 0; i < size.row; i++) {
 				basis.setValue(BigRational.ZERO, array[i][0]);
 			}
 		//carry forward
 		} else {
-			for(int i = 0; i < rows; i++) {	
+			for(int i = 0; i < size.row; i++) {	
 				basis.setValue( basis.getOldValue(array[i][1]), array[i][0]);			
 			}
 		}

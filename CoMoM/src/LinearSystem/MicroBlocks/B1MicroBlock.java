@@ -16,7 +16,7 @@ public class B1MicroBlock extends MicroBlock {
 	public B1MicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) {
 		super(qnm, basis, position, h);		
 		computeDimensions();
-		array = new int[rows][2];
+		array = new int[size.row][2];
 	}
 
 	public B1MicroBlock(B1MicroBlock micro_block, int current_class) {
@@ -26,8 +26,8 @@ public class B1MicroBlock extends MicroBlock {
 
 	@Override
 	protected void computeDimensions() {
-		rows = MiscFunctions.binomialCoefficient(qnm.M, h) * qnm.M;
-		cols = 0;
+		size.row = MiscFunctions.binomialCoefficient(qnm.M, h) * qnm.M;
+		size.col = 0;
 	}
 
 	@Override
@@ -57,25 +57,9 @@ public class B1MicroBlock extends MicroBlock {
 	}
 
 	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		int row_to_print = row - position.row;		
-		if(row_to_print >= 0 && row_to_print < rows) {
-			//print whitespace offset
-			for(int i = starting_column; i < array[row_to_print][1]; i++) {
-				System.out.format("%2s ", " ");
-			}
-			BigRational value = getValue(row_to_print);
-			if(!value.equals(BigRational.ZERO)) {
-				System.out.format("%2s ", getValue(row_to_print));
-			}
-		}
-
-	}
-
-	@Override
 	public void printRow2(int row) {
 		int row_to_print = row - position.row;		
-		if(row_to_print >= 0 && row_to_print < rows) {
+		if(row_to_print >= 0 && row_to_print < size.row) {
 			//print whitespace offset
 			for(int i = 0; i < array[row_to_print][1]; i++) {
 				System.out.format("%2s ", " ");
@@ -92,7 +76,7 @@ public class B1MicroBlock extends MicroBlock {
 	public void multiply(BigRational[] result, BigRational[] input)
 			throws BTFMatrixErrorException {
 		
-		for(int i = 0; i < rows; i++) {
+		for(int i = 0; i < size.row; i++) {
 			if(array[i][0] != 0) {
 				result[position.row + i] = input[getCol(i)].multiply(getValue(i));  //TODO copy()?
 			} else {
@@ -113,7 +97,7 @@ public class B1MicroBlock extends MicroBlock {
 
 	@Override
 	public void solve(BigRational[] rhs) {
-		for(int i = 0; i < rows; i++) {
+		for(int i = 0; i < size.row; i++) {
 			if(array[i][0] != 0) {
 				rhs[position.row + i] = basis.getOldValue(getCol(i)).multiply(getValue(i));  //TODO copy()?
 			} else {

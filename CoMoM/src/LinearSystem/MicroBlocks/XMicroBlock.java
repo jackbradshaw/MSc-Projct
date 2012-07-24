@@ -41,33 +41,9 @@ public class XMicroBlock extends MatrixMicroBlock {
 
 	@Override
 	protected void computeDimensions() {
-		rows = MiscFunctions.binomialCoefficient(qnm.M, h) * qnm.M;
-		cols = rows;
-	}
-
-	/**
-	 * 
-	 * @param row
-	 * @param col The first column of the containing macro block
-	 */
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		int row_to_print = row - position.row;		
-		if(row_to_print >= 0 && row_to_print < rows) {
-			//print whitespace offset
-			for(int i = starting_column; i < position.col; i++) {
-				System.out.format("%2s ", " ");
-			}
-		
-			for(int col = 0; col < cols; col++) {				
-				System.out.format("%2s ", array[row_to_print][col].toString());
-			}
-			
-			for(int i = position.col + cols; i < ending_column; i++) {
-				System.out.format("%2s ", " ");
-			}
-		}
-	}
+		size.row = MiscFunctions.binomialCoefficient(qnm.M, h) * qnm.M;
+		size.col = size.row;
+	}	
 
 	@Override
 	public int addCE(int vector_index, PopulationChangeVector n, int queue)
@@ -130,11 +106,11 @@ public class XMicroBlock extends MatrixMicroBlock {
 	public void solve2(BigRational[] rhs) throws BTFMatrixErrorException, OperationNotSupportedException, InconsistentLinearSystemException, InternalErrorException {
 		System.out.print("Solving XMicroBlock...\n\n");
 		
-		BigRational[] sysB = new BigRational[rows];
-		BigRational[] result = new BigRational[rows];
+		BigRational[] sysB = new BigRational[size.row];
+		BigRational[] result = new BigRational[size.row];
 		
 		//copy portion of rhs to sysB
-		for(int i = 0; i < rows; i++) {
+		for(int i = 0; i < size.row; i++) {
 			sysB[i] = rhs[position.row + i];
 		}
 		
@@ -150,7 +126,7 @@ public class XMicroBlock extends MatrixMicroBlock {
 		System.out.println("result");
 		MiscFunctions.printMatrix(result);
 		//copy result to basis
-		for(int i = 0; i < rows; i++) {
+		for(int i = 0; i < size.row; i++) {
 			basis.setValue(result[i], position.row + i);
 		}
 		

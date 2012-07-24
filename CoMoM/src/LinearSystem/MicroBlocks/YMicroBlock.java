@@ -23,28 +23,10 @@ public class YMicroBlock extends MatrixMicroBlock {
 
 	@Override
 	protected void computeDimensions() {
-		cols = MiscFunctions.binomialCoefficient(qnm.M, h);
-		rows  = cols * qnm.M;
+		size.col = MiscFunctions.binomialCoefficient(qnm.M, h);
+		size.row  = size.col * qnm.M;
 
-	}
-
-	/**
-	 * @param row 
-	 * @param column the start column of the containing macro block
-	 */
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		int row_to_print = row - position.row;
-		if(row_to_print >= 0 && row_to_print < rows) {
-			//print whitespace offset
-			for(int i = starting_column; i < position.col; i++) {
-				System.out.format("%2s ", " ");			
-			}
-			for(int col = 0; col < cols; col++) {							
-			 System.out.format("%2s ", array[row_to_print][col].toString());
-			}
-		}
-	}
+	}	
 
 	@Override
 	public int addCE(int row, PopulationChangeVector n, int queue)
@@ -55,8 +37,8 @@ public class YMicroBlock extends MatrixMicroBlock {
 		col -= position.col;
 		insertion_row -= position.row;
 			
-		if(col < 0 || col >= cols) throw new BTFMatrixErrorException("Column " + col + " not in micro block, when considering n:" + n +" queue: 0");
-		if(insertion_row < 0 || insertion_row >= rows) throw new BTFMatrixErrorException("Row " + row + " not in micro block, when considering n:" + n +" queue: 0");
+		if(col < 0 || col >= size.col) throw new BTFMatrixErrorException("Column " + col + " not in micro block, when considering n:" + n +" queue: 0");
+		if(insertion_row < 0 || insertion_row >= size.row) throw new BTFMatrixErrorException("Row " + row + " not in micro block, when considering n:" + n +" queue: 0");
 			
 		array[insertion_row][col] = BigRational.MINUS_ONE;
 		
@@ -75,7 +57,7 @@ public class YMicroBlock extends MatrixMicroBlock {
 		col -= position.col;
 		insertion_row -= position.row;		
 		
-		if(col >= 0 && col < cols) { //column is in this block
+		if(col >= 0 && col < size.col) { //column is in this block
 			array[insertion_row][col] = qnm.N.getAsBigRational(_class - 1).subtract(n.getAsBigRational(_class - 1)); 
 		}		
 		n.restore();
@@ -86,8 +68,8 @@ public class YMicroBlock extends MatrixMicroBlock {
 		insertion_row -= position.row;
 			
 		
-		if(col < 0 || col >= cols) throw new BTFMatrixErrorException("Column " + col + " not in micro block, when considering n:" + n +" queue: 0");
-		if(insertion_row < 0 || insertion_row >= rows) throw new BTFMatrixErrorException("Row " + row + " not in micro block, when considering n:" + n +" queue: 0");
+		if(col < 0 || col >= size.col) throw new BTFMatrixErrorException("Column " + col + " not in micro block, when considering n:" + n +" queue: 0");
+		if(insertion_row < 0 || insertion_row >= size.row) throw new BTFMatrixErrorException("Row " + row + " not in micro block, when considering n:" + n +" queue: 0");
 			
 		array[insertion_row][col] = qnm.getDelayAsBigRational(_class - 1).negate();				 		
 		
@@ -97,10 +79,10 @@ public class YMicroBlock extends MatrixMicroBlock {
 	@Override
 	public void solve(BigRational[] rhs) throws BTFMatrixErrorException {			
 			
-		if(position.col + cols > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");
+		if(position.col + size.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");
 		
-		for (int i = 0; i < rows; i++) { 			
-			for (int j = 0; j < cols; j++) {
+		for (int i = 0; i < size.row; i++) { 			
+			for (int j = 0; j < size.col; j++) {
 				if (!array[i][j].isZero()) {
 					if (basis.getNewValue(j + position.col).isPositive()) {
 						rhs[i + position.row] = rhs[i + position.row].add((array[i][j].multiply(basis.getNewValue(j + position.col))).negate());						

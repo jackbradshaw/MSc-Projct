@@ -20,24 +20,6 @@ public class XSecondaryMacroBlock extends SecondaryMacroBlock {
 	}
 	
 	/**
-	 * 
-	 * @param row
-	 * @param column The first column of Y
-	 */
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		int row_to_print = row - position.row;
-		if(row_to_print >= 0 && row_to_print < size.row) {
-			matrix.printRow(row);
-			//print whitespace offset
-			for(int i = position.col + size.col; i < ending_column; i++) {
-				System.out.format("%2s ", " ");					
-			}
-		}
-	}
-
-	
-	/**
 	 * Inserts CE at the given row (of the overall matrix)
 	 * @param row
 	 * @param row
@@ -83,7 +65,7 @@ public class XSecondaryMacroBlock extends SecondaryMacroBlock {
 
 	@Override
 	protected Position computeDimensions(MacroBlock block_1, MacroBlock block_2) {
-		return new Position(block_1.getRows(), block_2.getCols());
+		return new Position(block_1.size().row, block_2.size().col);
 	}
 
 }

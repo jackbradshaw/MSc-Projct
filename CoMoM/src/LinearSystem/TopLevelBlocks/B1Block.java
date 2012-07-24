@@ -11,31 +11,25 @@ import LinearSystem.MacroBlocks.MacroBlock;
 
 public class B1Block extends TopLevelBlock {
 
-	public B1Block(QNModel qnm, CoMoMBasis basis)
+	public B1Block(QNModel qnm, CoMoMBasis basis) //TODO why two?
 			throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
-		super(qnm, basis, new Position(0,0));		
+		super(qnm, basis, new Position(0,0));	
+		selection_policy = new TypeOneBlocks(qnm, this, current_class);
 	}
 	
 	public B1Block(QNModel qnm, CoMoMBasis basis, Position position)
 			throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
-		super(qnm, basis, position);		
+		super(qnm, basis, position);	
+		selection_policy = new TypeOneBlocks(qnm, this, current_class);
 	}
 
 	public B1Block(B1Block full_block, int current_class) {
 		super(full_block, current_class);
-		takeLeadingMacroBlocks(full_block, current_class);
 	}
 
 	@Override
 	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		macro_blocks[h] = new B1MacroBlock(qnm, basis, block_position, h);
-	}
-
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		for(int i = 0; i < macro_blocks.length; i++) {
-			macro_blocks[i].printRow(row, starting_column, ending_column);
-		}
 	}
 
 	@Override

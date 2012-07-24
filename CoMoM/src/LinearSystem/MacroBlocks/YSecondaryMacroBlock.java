@@ -17,23 +17,6 @@ public class YSecondaryMacroBlock extends SecondaryMacroBlock {
 	public  YSecondaryMacroBlock(YSecondaryMacroBlock full_block, int current_class, MacroBlock block_1, MacroBlock block_2) {
 		super(full_block, current_class, block_1, block_2);
 	}
-	
-	/**
-	 * 
-	 * @param row
-	 * @param column The first column of Y
-	 */
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		int row_to_print = row - position.row;
-		if(row_to_print >= 0 && row_to_print < size.row) {
-			//print whitespace offset
-			for(int i = starting_column; i < position.col; i++) {
-				System.out.format("%2s ", " ");					
-			}
-			matrix.printRow(row);
-		}
-	}
 
 	@Override
 	public int addCE(int position, PopulationChangeVector n, int queue)
@@ -68,7 +51,7 @@ public class YSecondaryMacroBlock extends SecondaryMacroBlock {
 
 	@Override
 	protected Position computeDimensions(MacroBlock block_1, MacroBlock block_2) {
-		return new Position(block_2.getRows(), block_1.getCols());
+		return new Position(block_2.size().row, block_1.size().col);
 	}
 
 }

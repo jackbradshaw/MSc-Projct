@@ -22,8 +22,8 @@ public class B2MicroBlock extends MicroBlock {
 
 	@Override
 	protected void computeDimensions() {
-		rows = MiscFunctions.binomialCoefficient(qnm.M, h);
-		cols = 0;
+		size.row = MiscFunctions.binomialCoefficient(qnm.M, h);
+		size.col = 0;
 	}
 
 	@Override
@@ -39,48 +39,14 @@ public class B2MicroBlock extends MicroBlock {
 		//Do Nothing, should never be used
 		return position;
 	}
-
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
 		
-		int number_of_queue_constants = MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M;
-		
-		int row_to_print = row - position.row;		
-		if(row_to_print >= 0 && row_to_print < rows) {
-			
-			int cols_printed = 0;
-			//print white offset
-			int first_column = (position.row + row_to_print - number_of_queue_constants) * qnm.M;
-			for(int i = 0; i < first_column; i++) {
-				System.out.format("%2s ", " ");
-				cols_printed++;
-			}
-			//print Demand for each queue
-			for(int k = 1; k <= qnm.M; k++) {
-				System.out.format("%2s ", qnm.getDemandAsBigInteger(k - 1, current_class - 1)).toString();
-				cols_printed++;
-			}			
-			//print white space to next block
-			for(int i = cols_printed; i < number_of_queue_constants; i++) {
-				System.out.format("%2s ", " ");
-			}			
-			//print whitespace to delays
-			for(int i = 0; i <= (row - number_of_queue_constants); i++) {
-				System.out.format("%2s ", " ");
-			}
-			//print Delay
-			System.out.format("%2s ", qnm.getDelayAsBigRational(current_class - 1).toString());
-		}
-
-	}
-	
 	@Override
 	public void printRow2(int row) {
 		
 		int number_of_queue_constants = MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M;
 		
 		int row_to_print = row - position.row;		
-		if(row_to_print >= 0 && row_to_print < rows) {
+		if(row_to_print >= 0 && row_to_print < size.row) {
 			
 			//cols_printed = 0;
 			//print white offset
@@ -114,7 +80,7 @@ public class B2MicroBlock extends MicroBlock {
 	
 		int number_of_queue_constants = MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M;
 		
-		for(int i = 0; i < rows; i++) {
+		for(int i = 0; i < size.row; i++) {
 			
 			//System.out.println("result: " + result[position.row + i]);
 			for(int k = 1; k <= qnm.M; k++) {
@@ -134,7 +100,7 @@ public class B2MicroBlock extends MicroBlock {
 		
 		BigRational value;
 		
-		for(int i = 0; i < rows; i++) {
+		for(int i = 0; i < size.row; i++) {
 			
 			basis.setValue(BigRational.ZERO, position.row + i);
 	

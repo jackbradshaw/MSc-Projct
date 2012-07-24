@@ -36,22 +36,6 @@ public class YBlock extends ATopLevelBlock {
 		sec_macro_blocks[h] = new YSecondaryMacroBlock(qnm, basis, block_position, block_1, block_2);
 	}
 
-	/**
-	 * 
-	 * @param row
-	 * @param column the start column of the block //TODO column un-used
-	 */
-	public void printRow(int row, int starting_column, int ending_column) {
-		
-		for(int i = 0; i < sec_macro_blocks.length; i++) {			
-			sec_macro_blocks[i].printRow(row, starting_column, ending_column);
-		}
-		for(int i = 0; i < macro_blocks.length; i++) {
-			macro_blocks[i].printRow(row, starting_column, ending_column);
-		}		
-		
-	}
-
 	@Override
 	protected void addSubSecMacroBlock(ATopLevelBlock full_block, int index) {
 		sec_macro_blocks[index] = 

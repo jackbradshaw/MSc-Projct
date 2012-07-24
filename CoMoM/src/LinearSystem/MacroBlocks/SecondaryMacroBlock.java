@@ -10,7 +10,6 @@ import LinearSystem.Position;
 public abstract class SecondaryMacroBlock extends ComponentBlock {
 
 	protected BlockMatrix matrix;
-	protected Position size;
 	
 	protected SecondaryMacroBlock(QNModel qnm, CoMoMBasis basis, Position position, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException {
 		super(qnm, basis, position);
@@ -43,11 +42,6 @@ public abstract class SecondaryMacroBlock extends ComponentBlock {
 
 	public void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException {
 		matrix.multiply(result, input);
-	}
-	
-	public Position size() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	/**

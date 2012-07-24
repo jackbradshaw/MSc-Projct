@@ -21,7 +21,7 @@ public class XBlock extends ATopLevelBlock {
 	}
 
 	public XBlock(XBlock full_block, int current_class) throws BTFMatrixErrorException {
-		super(full_block,  current_class);
+		super(full_block,  current_class);		
 	}
 
 	@Override
@@ -48,22 +48,6 @@ public class XBlock extends ATopLevelBlock {
 		super.printRow2(row);		
 		for(int i = 0; i < sec_macro_blocks.length; i++) {
 			sec_macro_blocks[i].printRow2(row);
-		}
-	}
-	
-	/**
-	 * 
-	 * @param row
-	 * @param column the end column of the block
-	 */
-	@Override
-	public void printRow(int row, int starting_column, int ending_column) {
-		for(int i = 0; i < macro_blocks.length; i++) {
-			//System.out.println("Macro Block h = " + i);
-			macro_blocks[i].printRow(row, position.col, ending_column);
-		}		
-		for(int i = 0; i < sec_macro_blocks.length; i++) {			
-			sec_macro_blocks[i].printRow(row, starting_column, ending_column);
 		}
 	}
 

@@ -12,17 +12,17 @@ import Exceptions.InternalErrorException;
 import LinearSystem.ComponentBlock;
 import LinearSystem.Position;
 import LinearSystem.MicroBlocks.MicroBlock;
+import LinearSystem.TopLevelBlocks.TypeOneBlocks;
 import Utilities.MiscFunctions;
 
 public abstract class MacroBlock extends ComponentBlock{
 
 	protected MicroBlock[] micro_blocks;
 	
-	//number of non-zeros
-	protected int h;
+	protected MicroBlockSelectionPolicy selection_policy;
 	
-	//Block dimensions
-	protected Position size;
+	//number of non-zeros
+	protected int h;	
 	
 	protected MacroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		super(qnm, basis, position);
@@ -38,43 +38,11 @@ public abstract class MacroBlock extends ComponentBlock{
 		
 		this.current_class  = current_class;
 		this.h = full_block.h;
-		this.size = full_block.size;
+		this.size = full_block.size; //TODO really?
+		System.out.println("current_class" + current_class);
+		micro_blocks = full_block.selection_policy.selectMicroBlocks(current_class);
 	}
-	
-	/**
-	 * Method to be called by subclass
-	 * @param full_block
-	 * @param current_class
-	 */
-	final protected void takeTailMicroBlocks(MacroBlock full_block, int current_class) {
 		
-		//The number of micro blocks at the head of the list that we are NOT taking
-		int number_of_micro_blocks = 0;
-		if(h < current_class ) {
-			number_of_micro_blocks = MiscFunctions.binomialCoefficient(current_class - 1, h);
-		}
-		//Take required macro blocks
-		micro_blocks = new MicroBlock[full_block.micro_blocks.length - number_of_micro_blocks];
-		for(int i = 0; i < micro_blocks.length; i++) {
-			micro_blocks[i] = SubMicroBlock(full_block, i + number_of_micro_blocks);
-		}
-	}
-	
-	/**
-	 * Method to be called by subclass
-	 * @param full_block
-	 * @param current_class
-	 */
-	final protected void takeHeadMicroBlocks(MacroBlock full_block, int current_class) {
-		int number_of_micro_blocks = MiscFunctions.binomialCoefficient(current_class - 1, h);
-		
-		//Take required macro blocks
-		micro_blocks = new MicroBlock[number_of_micro_blocks];
-		for(int i = 0; i < micro_blocks.length; i++) {
-			micro_blocks[i] = SubMicroBlock(full_block, i);
-		}
-	}
-	
 	protected abstract MicroBlock SubMicroBlock(MacroBlock full_block, int index);
 
 	public void initialise() throws InternalErrorException, InconsistentLinearSystemException {
@@ -97,10 +65,6 @@ public abstract class MacroBlock extends ComponentBlock{
 	}
 	
 	protected abstract void addMicroBlock(Position block_position, int index, int h) throws InternalErrorException, InconsistentLinearSystemException;
-
-	public Position size() {
-		return size;
-	}
 
 	private int findMicroBlock(int position) throws BTFMatrixErrorException {
 		if(position < 0) throw new  BTFMatrixErrorException("Trying to find macro block containing index: " + position);
@@ -160,13 +124,4 @@ public abstract class MacroBlock extends ComponentBlock{
 	public int numberOfMicroBlocks() {
 		return micro_blocks.length;
 	}
-	
-	public int getRows() {
-		return size.row;
-	}
-	
-	public int getCols() {
-		return size.col;
-	}
-
 }
