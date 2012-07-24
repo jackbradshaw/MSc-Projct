@@ -31,12 +31,7 @@ public class XMacroBlock extends MacroBlock {
 	}
 	
 	@Override
-	protected void addMicroBlock(Position block_position, int index, int h) throws InconsistentLinearSystemException {
-		micro_blocks[index] = new XMicroBlock(qnm, basis, block_position, h);
-	}
-
-	@Override
-	protected MicroBlock SubMicroBlock(MacroBlock full_block, int index) {
-		return new XMicroBlock((XMicroBlock) full_block.micro_blocks[index], current_class);		
+	protected MicroBlock newMicroBlock(Position block_position, int h) throws InconsistentLinearSystemException, InternalErrorException {
+		return new XMicroBlock(qnm, basis, block_position, h);
 	}
 }

@@ -18,6 +18,11 @@ public class B1MicroBlock extends MicroBlock {
 		computeDimensions();
 		array = new int[size.row][2];
 	}
+	
+	@Override
+	protected void initialiseDataStructures() {
+		array = new int[size.row][2];		
+	}
 
 	public B1MicroBlock(B1MicroBlock micro_block, int current_class) {
 		super(micro_block, current_class);

@@ -54,7 +54,7 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	 */
 	public TopLevelBlock subBlock(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		
-		//Create shallow copy of full block 
+		//Create shallow copy of full block and take macro_blocks
 		ATopLevelBlock sub_block = (ATopLevelBlock) super.subBlock(current_class);
 		
 		//Take required secondary macro blocks

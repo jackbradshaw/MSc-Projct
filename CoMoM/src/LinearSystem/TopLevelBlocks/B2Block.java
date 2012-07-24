@@ -34,8 +34,8 @@ public class B2Block extends TopLevelBlock {
 	}
 	
 	@Override
-	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
-		macro_blocks[h] = new B2MacroBlock(qnm, basis, block_position, h);
+	protected MacroBlock newMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
+		return new B2MacroBlock(qnm, basis, block_position, h);
 
 	}
 }

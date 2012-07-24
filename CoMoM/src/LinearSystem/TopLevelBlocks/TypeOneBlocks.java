@@ -3,6 +3,10 @@ package LinearSystem.TopLevelBlocks;
 import DataStructures.QNModel;
 import LinearSystem.MacroBlocks.MacroBlock;
 
+/**
+ * TODO comment regarding which blocks are taken
+ * @author Jack Bradshaw
+ */
 public class TypeOneBlocks extends MacroBlockSelectionPolicy{
 
 	protected TypeOneBlocks(QNModel qnm, TopLevelBlock full_block, int currnet_class) {

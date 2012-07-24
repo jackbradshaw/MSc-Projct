@@ -12,26 +12,104 @@ import Exceptions.InternalErrorException;
 import LinearSystem.ComponentBlock;
 import LinearSystem.Position;
 import LinearSystem.MicroBlocks.MicroBlock;
+import LinearSystem.TopLevelBlocks.TopLevelBlock;
 import LinearSystem.TopLevelBlocks.TypeOneBlocks;
 import Utilities.MiscFunctions;
 
 public abstract class MacroBlock extends ComponentBlock{
 
+	/**
+	 * Array of contained micro blocks
+	 */
 	protected MicroBlock[] micro_blocks;
 	
+	/**
+	 * Encapsulated policy for selecting micro blocks when 
+	 * creating sub-blocks for lower classes
+	 */
 	protected MicroBlockSelectionPolicy selection_policy;
 	
-	//number of non-zeros
+	/**
+	 * Number of non-zeros in n associated to macro block
+	 */
 	protected int h;	
 	
+	/**
+	 * Constructor - First phase of construction
+	 * 
+	 * Initialises everything up to but not including the list of micro blocks
+	 * @see MacroBlock#initialise() initialise()
+	 * 
+	 * @param qnm The Model under consideration
+	 * @param basis The corresponding basis for the model
+	 * @param position The starting position (top right hand corner) of the block
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
 	protected MacroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		super(qnm, basis, position);
-		this.h = h;
-		initialise();
+		this.h = h;		
+	}	
+
+	/**
+	 * Second Phase of Construction
+	 * 
+	 * This method initialises the list component micro blocks.
+	 *  
+	 * @throws BTFMatrixErrorException
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
+	public void initialise() throws InternalErrorException, InconsistentLinearSystemException {
+		
+		//Calculate the nunber of micro blocks this macro block will contain
+		int number_of_micro_blocks = MiscFunctions.binomialCoefficient(qnm.R - 1, h);
+	
+		micro_blocks = new MicroBlock[number_of_micro_blocks];
+	
+		//The size of the macro block
+		size = new Position(0,0);
+		
+		//The starting position of the next micro block to be added 
+		Position block_position = position.copy();
+	
+		//Instantiate micro blocks
+		for(int i = 0; i < number_of_micro_blocks; i++) {
+			
+			//insert new micro block
+			micro_blocks[i] = newMicroBlock(block_position.copy(), h);
+			
+			//Initialise micro block
+			micro_blocks[i].initialise();
+			
+			//increase block_position by the size of newly added micro block
+			block_position.add(micro_blocks[i].size());
+			
+			///increase the size of the macro block
+			size.add(micro_blocks[i].size());		
+		}
 	}
 	
 	/**
-	 * Constructor for lower classes	 
+	 * Factory Method for Micro Blocks
+	 * 
+	 * To be overridden by subclasses in order to create the appropriate
+	 * subclass of MacroBlock in the parallel hierarchy. 
+	 * 
+	 * i.e. XMacroBlocks are composed of XMicroBlocks
+	 * 
+	 * @param block_position Starting position for the new macro block
+	 * @param h Number of non-zeros associated with the macro block
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
+	protected abstract MicroBlock newMicroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException;
+	
+	/**
+	 * Copy Constructor
+	 * 
+	 * @param full_block Block to be copied
+	 * @param current_class The class for which the copy is being created
 	 */
 	protected MacroBlock(MacroBlock full_block, int current_class) {
 		super(full_block, current_class);
@@ -41,6 +119,12 @@ public abstract class MacroBlock extends ComponentBlock{
 		this.size = full_block.size; //TODO really?		
 	}
 		
+	/**
+	 * Builder method that encapsulates the creation of sub-MacroBlock
+	 * 
+	 * @param current_class The class for which the copy is being created
+	 * @return A shallow copy of calling block, containing the correct micro blocks for the current_class
+	 */
 	public MacroBlock subBlock(int current_class) {
 		
 		//Create Shallow copy of full block
@@ -52,31 +136,25 @@ public abstract class MacroBlock extends ComponentBlock{
 		return sub_block;
 	}
 	
+	/**
+	 * Factory Method for sub-block creation
+	 * 
+	 * This method is to be overridden by subclasses to instantiate a copy
+	 * of the current block (of the correct type)
+	 * 
+	 * For instance, a copy of an XMacroBlocks needs to be a XMacroBlock
+	 * 
+	 * @param current_class The class for which the copy is created
+	 * @return A shallow copy of calling block, for the current_class. Without micro blocks.
+	 */
 	protected abstract MacroBlock subBlockCopy(int current_class);
-	
-	protected abstract MicroBlock SubMicroBlock(MacroBlock full_block, int index);
 
-	public void initialise() throws InternalErrorException, InconsistentLinearSystemException {
-	
-		int number_of_micro_blocks = MiscFunctions.binomialCoefficient(qnm.R - 1, h);
-	
-		micro_blocks = new MicroBlock[number_of_micro_blocks];
-	
-		size = new Position(0,0);
-		
-		Position block_position = position.copy();
-	
-		//Instantiate micro blocks
-		for(int i = 0; i < number_of_micro_blocks; i++) {
-			addMicroBlock(block_position.copy(), i, h);			
-			block_position.add(micro_blocks[i].size());
-			size.add(micro_blocks[i].size());
-		
-		}
-	}
-	
-	protected abstract void addMicroBlock(Position block_position, int index, int h) throws InternalErrorException, InconsistentLinearSystemException;
-
+	/**
+	 * Finds the micro which contains a specified column (row) 
+	 * @param position The number of the column (row)
+	 * @return The index of containing MicroBlock in the list <code>micro_blocks</code>
+	 * @throws BTFMatrixErrorException
+	 */
 	private int findMicroBlock(int position) throws BTFMatrixErrorException {
 		if(position < 0) throw new  BTFMatrixErrorException("Trying to find macro block containing index: " + position);
 		
@@ -92,10 +170,24 @@ public abstract class MacroBlock extends ComponentBlock{
 		return block;
 	}
 	
+	/**
+	 * @return The number of micro blocks contain in this macro block
+	 */
+	protected int numberOfMicroBlocks() {
+		return micro_blocks.length;
+	}
+	
+	/*
+	 * OVERRIDEN METHODS FROM COMPONENT BLOCK...
+	 */
+	
 	@Override
 	public int addCE(int position, PopulationChangeVector n, int queue) throws BTFMatrixErrorException, InternalErrorException {
+		
+		//find micro block 
 		int block = findMicroBlock(position);
 		
+		//add equation to micro block
 		int row_inserted_at =  micro_blocks[block].addCE(position, n, queue);	
 		
 		return row_inserted_at;
@@ -103,8 +195,11 @@ public abstract class MacroBlock extends ComponentBlock{
 	
 	@Override
 	public int addPC(int position, PopulationChangeVector n, int _class) throws BTFMatrixErrorException, InternalErrorException {
+		
+		//find micro block 
 		int block = findMicroBlock(position);
 		
+		//add equation to micro block
 		int row_inserted_at = micro_blocks[block].addPC(position, n, _class);
 		
 		return row_inserted_at;
@@ -112,7 +207,7 @@ public abstract class MacroBlock extends ComponentBlock{
 	
 	@Override
 	public void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException {
-		
+		//multiply all micro blocks
 		for(int i = 0; i < micro_blocks.length; i++) {
 			micro_blocks[i].multiply(result, input);
 		}		
@@ -120,6 +215,7 @@ public abstract class MacroBlock extends ComponentBlock{
 	
 	@Override
 	public void solve(BigRational[] rhs) throws BTFMatrixErrorException, OperationNotSupportedException, InconsistentLinearSystemException, InternalErrorException {		
+		//solve all micro blocks
 		for(int i = 0; i <  micro_blocks.length ; i++) {
 			micro_blocks[i].solve(rhs);
 		}
@@ -127,12 +223,9 @@ public abstract class MacroBlock extends ComponentBlock{
 
 	@Override
 	public void printRow2(int row) {
+		//print all micro blocks
 		for(int i = 0; i < micro_blocks.length; i++) {
 			micro_blocks[i].printRow2(row);
 		}
-	}
-
-	public int numberOfMicroBlocks() {
-		return micro_blocks.length;
 	}
 }

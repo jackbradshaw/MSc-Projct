@@ -2,19 +2,29 @@ package LinearSystem.MicroBlocks;
 
 import Basis.CoMoMBasis;
 import DataStructures.QNModel;
+import Exceptions.InternalErrorException;
 import LinearSystem.ComponentBlock;
 import LinearSystem.Position;
 import LinearSystem.MacroBlocks.MacroBlock;
 
 public abstract class MicroBlock extends ComponentBlock {
 
-	//number of non zeros
+	/**
+	 * Number of non-zero elements in the associated pattern
+	 */
 	int h;		
 		
 	protected MicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) {
 		super(qnm, basis, position);
 		this.h = h;
 	}	
+	
+	public void initialise() throws InternalErrorException {
+		computeDimensions();
+		initialiseDataStructures();
+	}
+
+	protected abstract void initialiseDataStructures() throws InternalErrorException;
 
 	public MicroBlock(MicroBlock micro_block, int current_class) {
 		super(micro_block, current_class);

@@ -8,10 +8,14 @@ import LinearSystem.Position;
 
 public abstract class MatrixMicroBlock extends MicroBlock {
 
-	//current row at which to insert next equation
+	/**
+	 * The row at which to insert next equation
+	 */	
 	protected int row;	
 			
-	//underlying array
+	/**
+	 * The underlying array
+	 */
 	protected BigRational[][] array;
 		
 	protected MatrixMicroBlock(QNModel qnm, CoMoMBasis basis,
@@ -19,16 +23,13 @@ public abstract class MatrixMicroBlock extends MicroBlock {
 		super(qnm, basis, position, h);
 	}
 
-
 	public MatrixMicroBlock(MatrixMicroBlock micro_block, int current_class) {
 		super(micro_block, current_class);
 		this.array = micro_block.array;
 	}
 
-	/**
-	 * Initialiser to be called by subclasses 
-	 */
-	final protected void initialise() {
+	@Override
+	protected void initialiseDataStructures() {
 		row = 0;
 		array = new BigRational[size.row][size.col];
 		

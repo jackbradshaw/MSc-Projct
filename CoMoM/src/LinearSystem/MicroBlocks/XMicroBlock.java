@@ -24,7 +24,7 @@ public class XMicroBlock extends MatrixMicroBlock {
 	
 	private LUP_Decomposition LUP;
 	
-	public XMicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InconsistentLinearSystemException {
+	public XMicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InconsistentLinearSystemException, InternalErrorException {
 		super(qnm, basis, position, h);
 		computeDimensions();
 		initialise();				

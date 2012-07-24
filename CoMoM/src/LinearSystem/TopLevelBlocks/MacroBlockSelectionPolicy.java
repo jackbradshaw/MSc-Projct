@@ -5,8 +5,7 @@ import LinearSystem.MacroBlocks.MacroBlock;
 
 /**
  * A class to encapsulate the various policies for selecting Macro Blocks when considering lower classes
- * @author Jack Bradshaw
- *
+ * @author Jack Bradshaw *
  */
 public abstract class MacroBlockSelectionPolicy {
 	
@@ -32,7 +31,10 @@ public abstract class MacroBlockSelectionPolicy {
 
 	/**
 	 * Selects the required macro blocks as per the policy
+	 * and returns a list of the sub-blocks of those macro blocks
 	 * @param currnet_class The current class being considered.
+	 * @return Array of selected sub-MacroBlocks
 	 */
 	protected abstract MacroBlock[] selectMacroBlocks(int current_class);
+	
 }

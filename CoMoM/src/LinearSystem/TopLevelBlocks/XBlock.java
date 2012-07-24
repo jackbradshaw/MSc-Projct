@@ -30,9 +30,10 @@ public class XBlock extends ATopLevelBlock {
 	protected TopLevelBlock subBlockCopy(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		return new XBlock(this, current_class);
 	}
+	
 	@Override
-	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
-		macro_blocks[h] = new XMacroBlock(qnm, basis, block_position, h);
+	protected MacroBlock newMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
+		return new XMacroBlock(qnm, basis, block_position, h);
 	}
 	
 	@Override
@@ -40,7 +41,6 @@ public class XBlock extends ATopLevelBlock {
 			MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException {
 		Position block_position = new Position(block_1.getStartingRow(), block_2.getStartingCol());
 		sec_macro_blocks[h] = new XSecondaryMacroBlock(qnm, basis, block_position, block_1, block_2);
-
 	}
 	
 	public void LUPDecompose() throws InconsistentLinearSystemException {

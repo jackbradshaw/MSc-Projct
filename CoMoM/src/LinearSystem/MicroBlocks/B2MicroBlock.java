@@ -21,6 +21,11 @@ public class B2MicroBlock extends MicroBlock {
 	}
 
 	@Override
+	protected void initialiseDataStructures() {
+		//No underlying data structure		
+	}
+	
+	@Override
 	protected MicroBlock subBlockCopy(int current_class) {
 		return new B2MicroBlock(this, current_class);
 	}

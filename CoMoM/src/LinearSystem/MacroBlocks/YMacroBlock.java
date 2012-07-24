@@ -25,13 +25,7 @@ public class YMacroBlock extends MacroBlock {
 	}
 	
 	@Override
-	protected void addMicroBlock(Position block_position, int index, int h) {
-		micro_blocks[index] = new YMicroBlock(qnm, basis, block_position, h);
+	protected MicroBlock newMicroBlock(Position block_position, int h) throws InternalErrorException {
+		return new YMicroBlock(qnm, basis, block_position, h);
 	}
-
-	@Override
-	protected MicroBlock SubMicroBlock(MacroBlock full_block, int index) {
-		return new YMicroBlock((YMicroBlock) full_block.micro_blocks[index], current_class);			
-	}
-
 }

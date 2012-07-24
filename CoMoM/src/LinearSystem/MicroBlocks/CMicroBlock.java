@@ -19,8 +19,6 @@ public class CMicroBlock extends MicroBlock {
 	public CMicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InternalErrorException {
 		super(qnm, basis, position, h);	
 		computeDimensions();
-		array = new int[size.row][2]; 
-		initialise();
 	}
 	
 	public CMicroBlock(CMicroBlock full_block, int current_class) {
@@ -34,7 +32,9 @@ public class CMicroBlock extends MicroBlock {
 		return new CMicroBlock(this, current_class);
 	}
 
-	private void initialise() throws InternalErrorException {
+	protected void initialiseDataStructures() throws InternalErrorException {
+		
+		array = new int[size.row][2]; 
 		
 		//current_class = 1;
 		//The next row to write to

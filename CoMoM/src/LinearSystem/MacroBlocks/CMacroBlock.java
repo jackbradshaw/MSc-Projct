@@ -23,15 +23,10 @@ public class CMacroBlock extends MacroBlock {
 	protected MacroBlock subBlockCopy(int current_class) {
 		return new CMacroBlock(this, current_class);
 	}
-	
-	@Override
-	protected MicroBlock SubMicroBlock(MacroBlock full_block, int index) {
-		return new CMicroBlock((CMicroBlock) full_block.micro_blocks[index], current_class);			
-	}
 
 	@Override
-	protected void addMicroBlock(Position block_position, int index, int h) throws InternalErrorException {
-		micro_blocks[index] = new CMicroBlock(qnm, basis, block_position, h);
+	protected MicroBlock newMicroBlock(Position block_position, int h) throws InternalErrorException {
+		return new CMicroBlock(qnm, basis, block_position, h);
 	}	
 
 }

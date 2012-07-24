@@ -6,7 +6,12 @@ import DataStructures.BigRational;
 import Exceptions.InconsistentLinearSystemException;
 import LinearSystem.Position;
 
+/**
+ * LUP Decomposition algorithm based on pseudocode found in Cormen.
+ * @author Jack Bradshaw 
+ */
 public class LUP_Decomposition {
+	
 	/**
 	 * Basis for the model
 	 */
@@ -34,15 +39,17 @@ public class LUP_Decomposition {
 	
 	/**
 	 * 
+	 * @param basis
+	 * @param position
 	 * @param A
-	 * @throws InconsistentLinearSystemException 
+	 * @throws InconsistentLinearSystemException
 	 */
 	public LUP_Decomposition(CoMoMBasis basis, Position position, BigRational[][] A) throws InconsistentLinearSystemException {
 		
 		//store basis
 		this.basis = basis;
 		
-		//store the psotion of the matirx
+		//store the position of the matrix
 		this.position = position;
 		
 		//store size of matrix A
@@ -69,6 +76,10 @@ public class LUP_Decomposition {
 		//MiscFunctions.printMatrix(P);
 	}
 	
+	/**
+	 * Computes the LU decomposition of A in place in A_prime
+	 * @throws InconsistentLinearSystemException If matrix is singular
+	 */
 	private void decompose() throws InconsistentLinearSystemException {
 		System.out.println("A_prime: ");
 		MiscFunctions.printMatrix(A_prime);
@@ -101,12 +112,23 @@ public class LUP_Decomposition {
 		}
 	}
 	
+	/**
+	 * swaps elements of permutation matrix P
+	 * @param i position of first element
+	 * @param j position of second element
+	 */
 	private void P_exchange(int i, int j) {
 		int temp = P[i];
 		P[i] = P[j];
 		P[j] = temp;
 	}
 	
+	/**
+	 * Swaps element at (row_1,  col) with element at (row_2, col) in matrix A_prime
+	 * @param row_1
+	 * @param row_2
+	 * @param col
+	 */
 	private void A_prime_exchange(int row_1, int row_2, int col) {
 		BigRational temp = A_prime[row_1][col];
 		A_prime[row_1][col] = A_prime[row_2][col];

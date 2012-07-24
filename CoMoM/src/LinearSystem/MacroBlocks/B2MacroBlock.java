@@ -25,14 +25,7 @@ public class B2MacroBlock extends MacroBlock {
 	}
 
 	@Override
-	protected void addMicroBlock(Position block_position, int index, int h) {
-		micro_blocks[index] = new B2MicroBlock(qnm, basis, block_position, h);
-
+	protected MicroBlock newMicroBlock(Position block_position, int h) {
+		return new B2MicroBlock(qnm, basis, block_position, h);
 	}
-
-	@Override
-	protected MicroBlock SubMicroBlock(MacroBlock full_block, int index) {
-		return new B2MicroBlock(full_block.micro_blocks[index], current_class);			
-	}
-
 }

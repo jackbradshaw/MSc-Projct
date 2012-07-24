@@ -11,7 +11,7 @@ import LinearSystem.Position;
 
 public class YMicroBlock extends MatrixMicroBlock {
 
-	public YMicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) {
+	public YMicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InternalErrorException {
 		super(qnm, basis, position, h);
 		computeDimensions();
 		initialise();
