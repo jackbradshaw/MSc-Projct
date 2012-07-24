@@ -4,6 +4,7 @@ import Basis.CoMoMBasis;
 import DataStructures.QNModel;
 import LinearSystem.ComponentBlock;
 import LinearSystem.Position;
+import LinearSystem.MacroBlocks.MacroBlock;
 
 public abstract class MicroBlock extends ComponentBlock {
 
@@ -21,5 +22,16 @@ public abstract class MicroBlock extends ComponentBlock {
 		this.size = micro_block.size;		
 	}
 
-	protected abstract void computeDimensions();	
+	public MicroBlock subBlock(int current_class) {
+		
+		//Create Shallow copy of full block
+		MicroBlock sub_block = subBlockCopy(current_class);
+		
+		return sub_block;
+	}	
+	
+	protected abstract MicroBlock subBlockCopy(int current_class);
+
+	protected abstract void computeDimensions();
+
 }

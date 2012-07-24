@@ -35,6 +35,11 @@ public class XMicroBlock extends MatrixMicroBlock {
 		this.LUP = micro_block.LUP;
 	}
 	
+	@Override
+	protected MicroBlock subBlockCopy(int current_class) {
+		return new XMicroBlock(this, current_class);
+	}
+	
 	public void LUPDecompose() throws InconsistentLinearSystemException {
 		LUP = new LUP_Decomposition(basis, position, array);
 	}

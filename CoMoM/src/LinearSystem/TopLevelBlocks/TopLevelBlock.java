@@ -31,8 +31,6 @@ public abstract class TopLevelBlock extends ComponentBlock {
 		super(full_block, current_class);
 		
 		this.current_class = current_class;		
-		
-		macro_blocks = full_block.selection_policy.selectMacroBlocks(current_class);
 	}
 	
 	private void initialise() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
@@ -54,6 +52,19 @@ public abstract class TopLevelBlock extends ComponentBlock {
 	}	
 	
 	protected abstract void addMacroBlock(Position position, int h) throws InternalErrorException, InconsistentLinearSystemException;
+	
+	protected abstract TopLevelBlock subBlockCopy(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException;
+	
+	public TopLevelBlock subBlock(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+		
+		//Create a shallow copy of the current full block
+		TopLevelBlock sub_block = subBlockCopy(current_class);
+		
+		//Assign the correct macro blocks according to the selection policy
+		sub_block.macro_blocks = selection_policy.selectMacroBlocks(current_class);
+		
+		return sub_block;
+	}
 	
 	protected abstract MacroBlock SubMacroBlock(TopLevelBlock full_block, int index);
 	

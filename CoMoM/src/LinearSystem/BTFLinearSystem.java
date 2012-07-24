@@ -81,21 +81,29 @@ public class BTFLinearSystem extends LinearSystem {
 	   	x_block.LUPDecompose();
 	}
 	
-	public void initialiseForClass(PopulationVector current_N, int current_class) throws InternalErrorException, OperationNotSupportedException, BTFMatrixErrorException {
+	public void initialiseForClass(PopulationVector current_N, int current_class) throws InternalErrorException, OperationNotSupportedException, BTFMatrixErrorException, InconsistentLinearSystemException {
 		
 		current_N.plusOne(current_class);
 		basis.initialiseForClass(current_class);
 		ComponentBlock.setCurrentClassPopulation(1);
 		
+		/*
 		//Construct current_class matrix components from full matrices 
 		x  = new XBlock (  x_block, current_class);
 		y  = new YBlock (  y_block, current_class);
 		b1 = new B1Block( b1_block, current_class);
 		b2 = new B2Block( b2_block, current_class);
 		c  = new CBlock (  c_block, current_class);
+		*/
+		
+		x  = (XBlock)   x_block.subBlock(current_class);
+		y  = (YBlock)   y_block.subBlock(current_class);
+		b1 = (B1Block) b1_block.subBlock(current_class);
+		b2 = (B2Block) b2_block.subBlock(current_class);
+		c  = (CBlock)   c_block.subBlock(current_class);
 		
 		System.out.print("Matrices for class " + current_class + "\n\n\n");
-		//printWorkingMatrices();		
+		printWorkingMatrices();		
 	}
 	
 	

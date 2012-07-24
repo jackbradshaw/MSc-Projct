@@ -38,11 +38,22 @@ public abstract class MacroBlock extends ComponentBlock{
 		
 		this.current_class  = current_class;
 		this.h = full_block.h;
-		this.size = full_block.size; //TODO really?
-		System.out.println("current_class" + current_class);
-		micro_blocks = full_block.selection_policy.selectMicroBlocks(current_class);
+		this.size = full_block.size; //TODO really?		
 	}
 		
+	public MacroBlock subBlock(int current_class) {
+		
+		//Create Shallow copy of full block
+		MacroBlock sub_block = subBlockCopy(current_class);
+		
+		//Take required micro blocks as determined by selection policy
+		sub_block.micro_blocks = selection_policy.selectMicroBlocks(current_class);
+		
+		return sub_block;
+	}
+	
+	protected abstract MacroBlock subBlockCopy(int current_class);
+	
 	protected abstract MicroBlock SubMicroBlock(MacroBlock full_block, int index);
 
 	public void initialise() throws InternalErrorException, InconsistentLinearSystemException {

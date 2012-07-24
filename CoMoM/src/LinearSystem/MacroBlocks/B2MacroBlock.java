@@ -18,6 +18,11 @@ public class B2MacroBlock extends MacroBlock {
 	public B2MacroBlock(MacroBlock full_block, int current_class) {
 		super(full_block, current_class);
 	}
+	
+	@Override
+	protected MacroBlock subBlockCopy(int current_class) {
+		return new B2MacroBlock(this, current_class);
+	}
 
 	@Override
 	protected void addMicroBlock(Position block_position, int index, int h) {

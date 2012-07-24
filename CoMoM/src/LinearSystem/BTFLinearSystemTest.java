@@ -63,7 +63,7 @@ public class BTFLinearSystemTest {
 	}
 	
 	@Test
-	public void Muliplytest() throws BTFMatrixErrorException, InputFileParserException, InternalErrorException, OperationNotSupportedException {
+	public void Muliplytest() throws BTFMatrixErrorException, InputFileParserException, InternalErrorException, OperationNotSupportedException, InconsistentLinearSystemException {
 		
 		
 		ConvolutionSolver convolution = new ConvolutionSolver(qnm);

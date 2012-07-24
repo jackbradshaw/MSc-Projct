@@ -19,7 +19,7 @@ public class TypeOneBlocks extends MicroBlockSelectionPolicy {
 		//Take required macro blocks
 		MicroBlock[] micro_blocks = new MicroBlock[number_of_micro_blocks];
 		for(int i = 0; i < micro_blocks.length; i++) {
-			micro_blocks[i] = full_block.SubMicroBlock(full_block, i);
+			micro_blocks[i] = full_block.micro_blocks[i].subBlock(current_class);
 		}
 		return micro_blocks;
 	}

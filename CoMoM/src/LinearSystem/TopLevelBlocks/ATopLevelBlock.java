@@ -29,13 +29,20 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	 * @throws BTFMatrixErrorException 
 	 */
 	protected ATopLevelBlock(ATopLevelBlock full_block, int current_class) throws BTFMatrixErrorException {
-		super(full_block, current_class);
+		super(full_block, current_class);		
+	}
+
+	public TopLevelBlock subBlock(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+		
+		ATopLevelBlock sub_block = (ATopLevelBlock) super.subBlock(current_class);
 		
 		//Take required secondary macro blocks
-		sec_macro_blocks = new SecondaryMacroBlock[macro_blocks.length - 1];
-		for(int i = 0; i < sec_macro_blocks.length; i++) {
-			addSubSecMacroBlock(full_block, i);
+		sub_block.sec_macro_blocks = new SecondaryMacroBlock[sub_block.macro_blocks.length - 1];
+		for(int i = 0; i < sub_block.sec_macro_blocks.length; i++) {
+			sub_block.sec_macro_blocks[i] = sec_macro_blocks[i].subBlock(current_class, sub_block.macro_blocks[i], sub_block.macro_blocks[i + 1]);
 		}
+		
+		return sub_block;
 	}
 
 	private void initialiseSecondaryMacroBlocks() throws BTFMatrixErrorException {
@@ -100,7 +107,6 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	}
 	
 	
-	protected abstract void addSecondaryMacroBlock(int h, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException;
-	
-	protected abstract void addSubSecMacroBlock(ATopLevelBlock full_block, int index);
+	protected abstract void addSecondaryMacroBlock(int h, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException;	
+
 }

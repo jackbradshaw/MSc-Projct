@@ -23,6 +23,11 @@ public class B1MicroBlock extends MicroBlock {
 		super(micro_block, current_class);
 		this.array = micro_block.array;
 	}
+	
+	@Override
+	protected MicroBlock subBlockCopy(int current_class) {
+		return new B1MicroBlock(this, current_class);
+	}
 
 	@Override
 	protected void computeDimensions() {
@@ -105,5 +110,4 @@ public class B1MicroBlock extends MicroBlock {
 			}
 		}		
 	}
-
 }

@@ -20,6 +20,11 @@ public class YMacroBlock extends MacroBlock {
 	}
 
 	@Override
+	protected MacroBlock subBlockCopy(int current_class) {
+		return new YMacroBlock(this, current_class);
+	}
+	
+	@Override
 	protected void addMicroBlock(Position block_position, int index, int h) {
 		micro_blocks[index] = new YMicroBlock(qnm, basis, block_position, h);
 	}

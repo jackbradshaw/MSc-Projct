@@ -26,6 +26,10 @@ public class YBlock extends ATopLevelBlock {
 	}
 
 	@Override
+	protected TopLevelBlock subBlockCopy(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+		return new YBlock(this, current_class);
+	}
+	@Override
 	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		macro_blocks[h] = new YMacroBlock(qnm, basis, block_position, h);
 	}
@@ -34,15 +38,6 @@ public class YBlock extends ATopLevelBlock {
 	protected void addSecondaryMacroBlock(int h, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException {
 		Position block_position = new Position(block_2.getStartingRow(), block_1.getStartingCol());
 		sec_macro_blocks[h] = new YSecondaryMacroBlock(qnm, basis, block_position, block_1, block_2);
-	}
-
-	@Override
-	protected void addSubSecMacroBlock(ATopLevelBlock full_block, int index) {
-		sec_macro_blocks[index] = 
-				new YSecondaryMacroBlock((YSecondaryMacroBlock) full_block.sec_macro_blocks[index], 
-				current_class, macro_blocks[index], 
-				macro_blocks[index + 1]);
-		
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class TypeTwoBlocks extends MicroBlockSelectionPolicy {
 		//Take required macro blocks
 		MicroBlock[] micro_blocks = new MicroBlock[full_block.micro_blocks.length - number_of_micro_blocks];
 		for(int i = 0; i < micro_blocks.length; i++) {
-			micro_blocks[i] = full_block.SubMicroBlock(full_block, i + number_of_micro_blocks);
+			micro_blocks[i] = full_block.micro_blocks[i + number_of_micro_blocks].subBlock(current_class);
 		}
 		return micro_blocks;
 	}

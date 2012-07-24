@@ -16,7 +16,7 @@ public class TypeOneBlocks extends MacroBlockSelectionPolicy{
 		//Take required macro blocks
 		MacroBlock[] macro_blocks = new MacroBlock[number_of_macro_blocks];
 		for(int i = 0; i < macro_blocks.length; i++) {
-			macro_blocks[i] = full_block.SubMacroBlock(full_block, i);
+			macro_blocks[i] = full_block.macro_blocks[i].subBlock(current_class);
 		}
 		return macro_blocks;
 	}

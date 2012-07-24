@@ -26,6 +26,11 @@ public class CBlock extends TopLevelBlock {
 	}
 	
 	@Override
+	protected TopLevelBlock subBlockCopy(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+		return new CBlock(this, current_class);
+	}
+	
+	@Override
 	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		macro_blocks[h] = new CMacroBlock(qnm, basis, block_position, h);
 	}

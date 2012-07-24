@@ -22,6 +22,11 @@ public class YMicroBlock extends MatrixMicroBlock {
 	}
 
 	@Override
+	protected MicroBlock subBlockCopy(int current_class) {
+		return new YMicroBlock(this, current_class);
+	}
+	
+	@Override
 	protected void computeDimensions() {
 		size.col = MiscFunctions.binomialCoefficient(qnm.M, h);
 		size.row  = size.col * qnm.M;

@@ -15,7 +15,7 @@ public class TypeTwoBlocks extends MacroBlockSelectionPolicy{
 		//Take required macro blocks
 		MacroBlock[] macro_blocks = new MacroBlock[full_block.macro_blocks.length - 1];
 		for(int i = 0; i < macro_blocks.length; i++) {
-			macro_blocks[i] = full_block.SubMacroBlock(full_block, i + 1);
+			macro_blocks[i] = full_block.macro_blocks[i + 1].subBlock(current_class);
 		}
 		return macro_blocks;
 	}

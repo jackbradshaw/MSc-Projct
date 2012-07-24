@@ -19,6 +19,11 @@ public class XMacroBlock extends MacroBlock {
 		super(full_block, current_class);
 	}
 
+	@Override
+	protected MacroBlock subBlockCopy(int current_class) {
+		return new XMacroBlock(this, current_class);
+	}
+	
 	public void LUPDecompose() throws InconsistentLinearSystemException {
 		for(int i = 0; i < micro_blocks.length; i++) {
 			((XMicroBlock) micro_blocks[i]).LUPDecompose();

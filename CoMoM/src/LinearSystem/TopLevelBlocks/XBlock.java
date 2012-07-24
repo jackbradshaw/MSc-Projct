@@ -25,6 +25,10 @@ public class XBlock extends ATopLevelBlock {
 	}
 
 	@Override
+	protected TopLevelBlock subBlockCopy(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+		return new XBlock(this, current_class);
+	}
+	@Override
 	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		macro_blocks[h] = new XMacroBlock(qnm, basis, block_position, h);
 	}
@@ -56,10 +60,4 @@ public class XBlock extends ATopLevelBlock {
 		return new XMacroBlock(full_block.macro_blocks[index], current_class);
 		
 	} 
-	
-	@Override
-	protected void addSubSecMacroBlock(ATopLevelBlock full_block, int index) {
-		sec_macro_blocks[index] = new XSecondaryMacroBlock((XSecondaryMacroBlock) full_block.sec_macro_blocks[index], current_class, macro_blocks[index], macro_blocks[index + 1]);		
-	}
-
 }

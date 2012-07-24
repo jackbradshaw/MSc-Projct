@@ -26,6 +26,11 @@ public class B1Block extends TopLevelBlock {
 	public B1Block(B1Block full_block, int current_class) {
 		super(full_block, current_class);
 	}
+	
+	@Override
+	protected TopLevelBlock subBlockCopy(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
+		return new B1Block(this, current_class);
+	}
 
 	@Override
 	protected void addMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {

@@ -20,14 +20,9 @@ public abstract class SecondaryMacroBlock extends ComponentBlock {
 	 * Constructor for lower classes
 	 * @param full_block
 	 * @param current_class
-	 * @param block_1
-	 * @param block_2
 	 */
-	protected  SecondaryMacroBlock(SecondaryMacroBlock full_block, int current_class, MacroBlock block_1, MacroBlock block_2) {
-		super(full_block, current_class);
-		Position divisions = computeDivisions(block_1, block_2);
-		matrix = new BlockMatrix(full_block.matrix, divisions);
-		size = matrix.getSize();
+	protected  SecondaryMacroBlock(SecondaryMacroBlock full_block, int current_class) {
+		super(full_block, current_class);		
 	}
 	
 	private void initialise(MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException {
@@ -67,5 +62,20 @@ public abstract class SecondaryMacroBlock extends ComponentBlock {
 	public void solve(BigRational[] rhs) throws BTFMatrixErrorException {
 		matrix.solve(rhs);		
 	}
+
+	public SecondaryMacroBlock subBlock(int current_class, MacroBlock macro_block_1, MacroBlock macro_block_2) {
+		
+		//Create a shallow copy of the current full block
+		SecondaryMacroBlock sub_block = subBlockCopy(current_class);
+		
+		//Take the required 'top corner' of the full block's matrix
+		Position divisions = computeDivisions(macro_block_1, macro_block_2);
+		sub_block.matrix = new BlockMatrix(matrix, divisions);
+		sub_block.size = matrix.getSize();
+		
+		return sub_block;
+	}
+
+	protected abstract SecondaryMacroBlock subBlockCopy(int current_class);
 
 }

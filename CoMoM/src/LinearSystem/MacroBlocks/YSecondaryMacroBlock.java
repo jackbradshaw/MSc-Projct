@@ -14,10 +14,16 @@ public class YSecondaryMacroBlock extends SecondaryMacroBlock {
 		super(qnm, basis, position, block_1, block_2);		
 	}
 
-	public  YSecondaryMacroBlock(YSecondaryMacroBlock full_block, int current_class, MacroBlock block_1, MacroBlock block_2) {
-		super(full_block, current_class, block_1, block_2);
+	public  YSecondaryMacroBlock(YSecondaryMacroBlock full_block, int current_class) {
+		super(full_block, current_class);
 	}
 
+	
+	@Override
+	protected SecondaryMacroBlock subBlockCopy(int current_class) {
+		return new YSecondaryMacroBlock(this, current_class);
+	}
+	
 	@Override
 	public int addCE(int position, PopulationChangeVector n, int queue)
 			throws BTFMatrixErrorException, InternalErrorException {

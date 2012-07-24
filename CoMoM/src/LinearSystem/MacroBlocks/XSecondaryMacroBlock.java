@@ -1,7 +1,6 @@
 package LinearSystem.MacroBlocks;
 
 import Basis.CoMoMBasis;
-import DataStructures.BigRational;
 import DataStructures.PopulationChangeVector;
 import DataStructures.QNModel;
 import Exceptions.BTFMatrixErrorException;
@@ -15,8 +14,13 @@ public class XSecondaryMacroBlock extends SecondaryMacroBlock {
 		super(qnm, basis, position, block_1, block_2);
 	}
 	
-	public  XSecondaryMacroBlock(XSecondaryMacroBlock full_block, int current_class, MacroBlock block_1, MacroBlock block_2) {
-		super(full_block, current_class, block_1, block_2);
+	public  XSecondaryMacroBlock(XSecondaryMacroBlock full_block, int current_class) {
+		super(full_block, current_class);
+	}
+	
+	@Override
+	protected SecondaryMacroBlock subBlockCopy(int current_class) {
+		return new XSecondaryMacroBlock(this, current_class);
 	}
 	
 	/**

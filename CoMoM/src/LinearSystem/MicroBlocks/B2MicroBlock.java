@@ -21,6 +21,11 @@ public class B2MicroBlock extends MicroBlock {
 	}
 
 	@Override
+	protected MicroBlock subBlockCopy(int current_class) {
+		return new B2MicroBlock(this, current_class);
+	}
+	
+	@Override
 	protected void computeDimensions() {
 		size.row = MiscFunctions.binomialCoefficient(qnm.M, h);
 		size.col = 0;

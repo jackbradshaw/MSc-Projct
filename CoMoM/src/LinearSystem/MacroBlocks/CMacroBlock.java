@@ -20,6 +20,11 @@ public class CMacroBlock extends MacroBlock {
 	}
 	
 	@Override
+	protected MacroBlock subBlockCopy(int current_class) {
+		return new CMacroBlock(this, current_class);
+	}
+	
+	@Override
 	protected MicroBlock SubMicroBlock(MacroBlock full_block, int index) {
 		return new CMicroBlock((CMicroBlock) full_block.micro_blocks[index], current_class);			
 	}

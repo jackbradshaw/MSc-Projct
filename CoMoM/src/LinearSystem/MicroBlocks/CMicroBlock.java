@@ -28,6 +28,11 @@ public class CMicroBlock extends MicroBlock {
 		this.array = full_block.array;
 		this._class = full_block._class;
 	}
+	
+	@Override
+	protected MicroBlock subBlockCopy(int current_class) {
+		return new CMicroBlock(this, current_class);
+	}
 
 	private void initialise() throws InternalErrorException {
 		
