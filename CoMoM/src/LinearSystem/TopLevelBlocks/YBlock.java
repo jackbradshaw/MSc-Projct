@@ -14,11 +14,13 @@ import LinearSystem.MacroBlocks.YSecondaryMacroBlock;
 public class YBlock extends ATopLevelBlock {
 	
 	public YBlock(QNModel qnm, CoMoMBasis basis) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
-		super(qnm, basis, new Position(0, MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M));		
+		super(qnm, basis, new Position(0, MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M));	
+		selection_policy = new TypeOneBlocks(qnm, this, current_class);	
 	}
 
 	public YBlock(QNModel qnm, CoMoMBasis basis, Position position) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		super(qnm, basis, position);		
+		selection_policy = new TypeOneBlocks(qnm, this, current_class);	
 	}
 
 	public YBlock(YBlock full_block, int current_class) throws BTFMatrixErrorException {

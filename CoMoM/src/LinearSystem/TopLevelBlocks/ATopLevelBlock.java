@@ -17,22 +17,44 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 
 	protected SecondaryMacroBlock[] sec_macro_blocks;
 	
+	/**
+	 * Constructor - First phase of creation, does not initialise MacroBlocks or SecondaryMacroBlocks
+	 * @see ATopLevelBlock#initialise() initialise()
+	 * @see ATopLevelBlock#initialiseSecondaryMacroBlocks() initialiseSecondaryMacroBlocks()
+	 * @param qnm
+	 * @param basis
+	 * @param position
+	 * @throws BTFMatrixErrorException
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
 	protected ATopLevelBlock(QNModel qnm, CoMoMBasis basis, Position position)
 			throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
-		super(qnm, basis, position);
-		selection_policy = new TypeOneBlocks(qnm, this, current_class);		
+		super(qnm, basis, position);	
 	}		
 	
 	/**
-	 * Constructor for lower classes	 
+	 * Copy Constructor	 
 	 * @throws BTFMatrixErrorException 
 	 */
 	protected ATopLevelBlock(ATopLevelBlock full_block, int current_class) throws BTFMatrixErrorException {
 		super(full_block, current_class);		
 	}
 
+	/**
+	 * Builder method that encapsulates the creation of sub-ATopLevelBlocks
+	 * Fills list of MacroBlocks as super class.
+	 * Fills list of SecondaryMacroBlocks.
+	 * 
+	 * @param current_class The class for which the copy is created
+	 * @return A shallow copy of calling block, containing the correct macro blocks for the current_class
+	 * @throws BTFMatrixErrorException
+	 * @throws InternalErrorException
+	 * @throws InconsistentLinearSystemException
+	 */
 	public TopLevelBlock subBlock(int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		
+		//Create shallow copy of full block 
 		ATopLevelBlock sub_block = (ATopLevelBlock) super.subBlock(current_class);
 		
 		//Take required secondary macro blocks
@@ -45,7 +67,7 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	}
 	
 	/**
-	 * initialise() overriden to further create list of SecondaryMacroBlocks
+	 * initialise() overridden to further create list of SecondaryMacroBlocks
 	 */
 	@Override
 	public void initialise() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
@@ -57,6 +79,10 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 		initialiseSecondaryMacroBlocks();
 	}
 
+	/**
+	 * Creates list of contained SecondaryMacroBlocks
+	 * @throws BTFMatrixErrorException
+	 */
 	private void initialiseSecondaryMacroBlocks() throws BTFMatrixErrorException {
 		sec_macro_blocks = new SecondaryMacroBlock[macro_blocks.length - 1];
 		//Instantiate secondary macro blocks		
@@ -78,13 +104,33 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 		return row_inserted_at;
 	}
 	
+	/**
+	 * Factory Method for Secondary Macro Blocks
+	 * 
+	 * To be overridden by subclasses in order to create the appropriate
+	 * subclass of SecondaryMacroBlock in the parallel hierarchy. 
+	 * 
+	 * @param h
+	 * @param block_1
+	 * @param block_2
+	 * @throws BTFMatrixErrorException
+	 */
+	protected abstract void addSecondaryMacroBlock(int h, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException;
+	
+	/*
+	 * OVERRIDEN METHODS FROM COMPONENT BLOCK...
+	 */
+	
 	@Override
 	public int addPC(int position, PopulationChangeVector n, int _class) throws BTFMatrixErrorException, InternalErrorException {
 		
+		//Locate macro block that contains the leading constant
 		int block = findMacroBlock(position);		
 		
+		//add equation to macro block 
 		int row_inserted_at =  macro_blocks[block].addPC(position, n, _class);	
 		
+		//add equation to secondary macro block
 		if(block > 0) {
 			sec_macro_blocks[block - 1].addPC(row_inserted_at, n, _class);
 		}
@@ -95,6 +141,7 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	@Override
 	public void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException {
 		
+		//multiply macro_blocks
 		super.multiply(result, input);
 		
 		//Also multiply sec_macro_blocks
@@ -117,8 +164,4 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 			macro_blocks[i].solve(rhs);
 		}
 	}
-	
-	
-	protected abstract void addSecondaryMacroBlock(int h, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException;	
-
 }

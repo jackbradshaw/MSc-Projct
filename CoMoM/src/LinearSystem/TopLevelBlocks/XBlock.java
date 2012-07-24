@@ -13,11 +13,13 @@ import LinearSystem.MacroBlocks.XSecondaryMacroBlock;
 public class XBlock extends ATopLevelBlock {
 
 	public XBlock(QNModel qnm, CoMoMBasis basis) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {		
-		super(qnm, basis, new Position(0,0));		
+		super(qnm, basis, new Position(0,0));
+		selection_policy = new TypeOneBlocks(qnm, this, current_class);	
 	}
 	
 	public XBlock(QNModel qnm, CoMoMBasis basis, Position position) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
-		super(qnm, basis, position);		
+		super(qnm, basis, position);	
+		selection_policy = new TypeOneBlocks(qnm, this, current_class);	
 	}
 
 	public XBlock(XBlock full_block, int current_class) throws BTFMatrixErrorException {
