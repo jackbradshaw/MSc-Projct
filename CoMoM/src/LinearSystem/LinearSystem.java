@@ -1,11 +1,16 @@
 package LinearSystem;
 
+import javax.naming.OperationNotSupportedException;
+
 import Basis.CoMoMBasis;
 import DataStructures.BigRational;
+import DataStructures.PopulationVector;
 import DataStructures.QNModel;
+import Exceptions.BTFMatrixErrorException;
+import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InternalErrorException;
 
-public class LinearSystem {
+public abstract class LinearSystem {
 
 	protected  CoMoMBasis basis;
 	
@@ -26,4 +31,18 @@ public class LinearSystem {
 	public void computePerformanceMeasures() throws InternalErrorException {
 		basis.computePerformanceMeasures();		
 	}
+	
+	public abstract void update(int current_class_population ); 
+	
+	public abstract void solve() throws OperationNotSupportedException, InconsistentLinearSystemException, InternalErrorException, BTFMatrixErrorException;
+	
+	public final void initialiseForClass(PopulationVector current_N, int current_class) 
+			throws InternalErrorException, OperationNotSupportedException, BTFMatrixErrorException, InconsistentLinearSystemException {
+		current_N.plusOne(current_class);
+		basis.initialiseForClass(current_class);
+		initialiseMatricesForClass(current_N, current_class);
+	}
+	
+	protected abstract void initialiseMatricesForClass(PopulationVector current_N, int current_class) 
+			throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException, OperationNotSupportedException;		
 }

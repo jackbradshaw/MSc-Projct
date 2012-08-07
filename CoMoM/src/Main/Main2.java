@@ -18,6 +18,7 @@ import Exceptions.InputFileParserException;
 import Exceptions.InternalErrorException;
 import LinearSystem.BTFLinearSystem;
 import LinearSystem.LinearSystem;
+import LinearSystem.SimpleLinearSystem;
 import LinearSystemSolver.SimpleSolver;
 import Matrix.StandardMatrix;
 
@@ -29,7 +30,7 @@ public class Main2 {
 	private static PopulationVector current_N;
 	private static PopulationVector target_N;
 	
-	private static BTFLinearSystem system; 
+	private static LinearSystem system; 
 	
 	private static CoMoMBasis basis;
 	
@@ -53,7 +54,8 @@ public class Main2 {
 		System.out.println("\n");
 		
 		basis =  new BTFCoMoMBasis(qnm);
-		system = new BTFLinearSystem(qnm, basis);
+		//system = new BTFLinearSystem(qnm, basis);
+		system = new SimpleLinearSystem(qnm, basis,1);
 		
 		
 		try {

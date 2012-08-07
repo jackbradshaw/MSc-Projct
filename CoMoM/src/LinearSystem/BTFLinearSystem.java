@@ -90,10 +90,9 @@ public class BTFLinearSystem extends LinearSystem {
 	   	x_block.LUPDecompose();
 	}
 	
-	public void initialiseForClass(PopulationVector current_N, int current_class) throws InternalErrorException, OperationNotSupportedException, BTFMatrixErrorException, InconsistentLinearSystemException {
+	@Override
+	public void initialiseMatricesForClass(PopulationVector current_N, int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		
-		current_N.plusOne(current_class);
-		basis.initialiseForClass(current_class);
 		ComponentBlock.setCurrentClassPopulation(1);		
 		
 		//create sub-blocks for the current class
@@ -107,7 +106,7 @@ public class BTFLinearSystem extends LinearSystem {
 		//printWorkingMatrices();		
 	}
 	
-	
+	@Override
 	public void solve() throws OperationNotSupportedException, InconsistentLinearSystemException, InternalErrorException, BTFMatrixErrorException {
 	//	System.out.println("Solving System...\n");
 		
@@ -130,7 +129,7 @@ public class BTFLinearSystem extends LinearSystem {
 		//basis.print_values();
 	}
 	
-	
+	@Override
 	public void update(int current_class_population ) {
 		ComponentBlock.setCurrentClassPopulation(current_class_population);
 	}
@@ -158,9 +157,6 @@ public class BTFLinearSystem extends LinearSystem {
 		c.multiply(rhs_result, rhs);
 		*/
 	}
-	
-	
-
 	
 	private void printFullMatrices() {
 		print(x_block, y_block, b1_block, b2_block, c_block);

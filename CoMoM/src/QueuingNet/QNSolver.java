@@ -16,8 +16,12 @@
  */
 package QueuingNet;
 
+import javax.naming.OperationNotSupportedException;
+
 import DataStructures.BigRational;
 import DataStructures.QNModel;
+import Exceptions.BTFMatrixErrorException;
+import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InternalErrorException;
 import Utilities.Timer;
 
@@ -62,9 +66,12 @@ public class QNSolver implements QNSolverInterface {
      * Computes the normalising constant for the specified QNModel.
      *
      * @throws InternalErrorException * @throws InternalErrorException An exception is thrown if any internal error is encountered during computations.
+     * @throws BTFMatrixErrorException 
+     * @throws InconsistentLinearSystemException 
+     * @throws OperationNotSupportedException 
      */
     @Override
-    public void computeNormalisingConstant() throws InternalErrorException {
+    public void computeNormalisingConstant() throws InternalErrorException, OperationNotSupportedException, InconsistentLinearSystemException, BTFMatrixErrorException {
         throw new UnsupportedOperationException("Not supported.");
     }
 

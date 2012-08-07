@@ -17,6 +17,10 @@
 
 package QueuingNet;
 
+import javax.naming.OperationNotSupportedException;
+
+import Exceptions.BTFMatrixErrorException;
+import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InternalErrorException;
 
 /**
@@ -32,8 +36,11 @@ public interface QNSolverInterface {
      * Computes and stores the normalising constant.
      *
      * @throws InternalErrorException An exception is thrown if any internal error is encountered during computations.
+     * @throws BTFMatrixErrorException 
+     * @throws InconsistentLinearSystemException 
+     * @throws OperationNotSupportedException 
      */
-    public void computeNormalisingConstant() throws InternalErrorException;
+    public void computeNormalisingConstant() throws InternalErrorException, OperationNotSupportedException, InconsistentLinearSystemException, BTFMatrixErrorException;
 
     /**
      * Returns a string represnting the normalising constant.

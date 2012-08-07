@@ -17,10 +17,16 @@
 
 package Control;
 
+import javax.naming.OperationNotSupportedException;
+
+import QueuingNet.CoMoMBTFSolver;
+import QueuingNet.CoMoMSimpleSolver;
 import QueuingNet.ConvolutionSolver;
 import QueuingNet.MoMSolver;
 import QueuingNet.RECALSolver;
 import DataStructures.QNModel;
+import Exceptions.BTFMatrixErrorException;
+import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InternalErrorException;
 import QueuingNet.RECALNonRecursiveSolver;
 import Utilities.MiscFunctions;
@@ -36,8 +42,11 @@ public class Main {
 
     /**
      * Used to test the provided API.
+     * @throws BTFMatrixErrorException 
+     * @throws InconsistentLinearSystemException 
+     * @throws OperationNotSupportedException 
      */
-    private static void interfaceTest() {
+    private static void interfaceTest() throws OperationNotSupportedException, InconsistentLinearSystemException, BTFMatrixErrorException {
         int R = 2, M = 4;
 
         int[] type = {MoMSolverDispatcher.LI, MoMSolverDispatcher.LI, MoMSolverDispatcher.LD, MoMSolverDispatcher.LD, MoMSolverDispatcher.LD};
@@ -103,6 +112,10 @@ public class Main {
         System.out.println("3: MoM (parallel)");
         System.out.println("4: MoM (serial)");
         System.out.println("5: MoM (auto-select)");
+        System.out.println("6: CoMoM (parallel)");
+        System.out.println("7: CoMoM (serial)");
+        System.out.println("8: CoMoM (BTF)");
+        
         //System.out.println("999: Interface test mode");
     }
 
@@ -166,6 +179,20 @@ public class Main {
                     case 4:
                         c = new MoMSolver(qnm, 1);
                         break;
+                    case 6:
+                    	 if (nThreads > 1) {
+                             c = new CoMoMSimpleSolver(qnm, nThreads);
+                             break;
+                         } else {
+                             printHelp();
+                             return;
+                         }
+                    case 7:
+                    	c= new CoMoMSimpleSolver(qnm, 1);
+                    	break;
+                    case 8:
+                    	c= new CoMoMBTFSolver(qnm);
+                    	break;
                     default:
                         printHelp();
                         return;

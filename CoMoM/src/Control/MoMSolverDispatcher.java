@@ -16,8 +16,12 @@
  */
 package Control;
 
+import javax.naming.OperationNotSupportedException;
+
 import DataStructures.BigRational;
 import DataStructures.QNModel;
+import Exceptions.BTFMatrixErrorException;
+import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InternalErrorException;
 import QueuingNet.MoMSolver;
 import QueuingNet.QNSolver;
@@ -151,8 +155,11 @@ public class MoMSolverDispatcher {
      * input(...) must have been called first.
      *
      * @throws InternalErrorException Thrown when any error is encountered during computations, i.e. due to linear system singularities
+     * @throws BTFMatrixErrorException 
+     * @throws InconsistentLinearSystemException 
+     * @throws OperationNotSupportedException 
      */
-    public void solve() throws InternalErrorException {
+    public void solve() throws InternalErrorException, OperationNotSupportedException, InconsistentLinearSystemException, BTFMatrixErrorException {
         QNSolver c = new MoMSolver(qnm, nThreads);
         c.printWelcome();
         System.out.println("Will solve the following model: ");
