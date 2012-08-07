@@ -1,7 +1,8 @@
 package Basis;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
 import DataStructures.BigRational;
 import DataStructures.MultiplicitiesVector;
 import DataStructures.PopulationChangeVector;
@@ -15,8 +16,13 @@ public class CoMoMBasis extends Basis{
 	/**
 	 * Data Structure to hold the ordering of PopualtionChangeVectors
 	 */
-	protected ArrayList<PopulationChangeVector> order;
+	protected ArrayList<PopulationChangeVector> order;	
 	
+	/**
+	 * Comparator with which to sort the PopulationChangeVectors,
+	 * can be set using setComparator()
+	 */
+	private Comparator<PopulationChangeVector> vector_comparator;
 	
 	/**
 	 * Constructor
@@ -29,9 +35,9 @@ public class CoMoMBasis extends Basis{
 	
 	private void initialise() {
 		order = new ArrayList<PopulationChangeVector>();
-		generate();
-		//Will sort the order if sort() is implemented
-		sort();
+		
+		//Generate all the possible population change vectors
+		generate();		
 	}
 	
 	/**
@@ -58,11 +64,25 @@ public class CoMoMBasis extends Basis{
 	}
 	
 	/**
-	 * Can be overridden to sort the order
+	 * A subclass can choose a vector comparator this method sets the comparator and uses it to sort
+	 * the ordering
+	 * @param comparator
 	 */
-	protected void sort() {
-		//Do nothing, but subclasses can if they want
-		return;
+	protected void setComparator(Comparator<PopulationChangeVector> comparator) {
+		vector_comparator = comparator;
+		sort();		
+	}
+	
+	/**
+	 * Sorts the PopulationChangeVectors according to the 'vector_comparator'
+	 */
+	protected final void sort() {
+		if(vector_comparator == null) {
+			//No comparator specifed, do nothing.
+			return;
+		} else { //sort the ordering
+			Collections.sort(order, vector_comparator);
+		}
 	}
 	
 	/**
@@ -102,7 +122,7 @@ public class CoMoMBasis extends Basis{
 	
 	
 	/**
-	 * Prints the vectors in 'order'
+	 * Prints the vectors in the 'order' vector
 	 */
 	public void print() {
 		int total = 0;
@@ -137,6 +157,7 @@ public class CoMoMBasis extends Basis{
 	public void initialiseForClass(int current_class) throws InternalErrorException {
 		//Do nothing
 	}
+	
 	/**
 	 * Calculates the size of the basis to be store in variable size
 	 */

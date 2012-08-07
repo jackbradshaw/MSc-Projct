@@ -37,8 +37,7 @@ public abstract class Basis {
 	/**
 	 * Variable to store the size of the basis, due to frequent use
 	 */
-	protected int size;
-	
+	protected int size;	
 	
 	/**
 	 * Constructor

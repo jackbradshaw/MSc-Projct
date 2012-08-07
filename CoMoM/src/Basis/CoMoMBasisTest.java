@@ -36,7 +36,7 @@ public class CoMoMBasisTest {
 	public void setUp() throws Exception {
 		qnm = new QNModel("jack_test.txt");
 		basis = new CoMoMBasis(qnm);
-			}
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -128,5 +128,4 @@ public class CoMoMBasisTest {
 			e.printStackTrace();
 		}
 	}
-
 }

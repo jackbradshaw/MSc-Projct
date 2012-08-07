@@ -35,12 +35,15 @@ public class Main2 {
 	
 	public static void main(String[] args) throws InputFileParserException, InternalErrorException, BTFMatrixErrorException, InconsistentLinearSystemException {
 		
-		qnm = new QNModel("models\\test_model_4_comp_larger.txt");
-		//qnm = new QNModel("models\\test_model_5.txt");
+		//qnm = new QNModel("models\\test_model_4_comp_larger.txt");
+		qnm = new QNModel("models\\test_model_5.txt");
 		//qnm = new QNModel("models\\test_model_2.txt");
 		//qnm = new QNModel("models\\test_model_7.txt");
-		//qnm = new QNModel("models\\model8.txt");
+		//qnm = new QNModel("models\\model10.txt");
 		//qnm = new QNModel("models\\big_model.txt");
+		
+		//qnm = new QNModel("models\\MoMPaperModel.txt");
+		
 		M = qnm.M;
 		R = qnm.R;	
 		target_N = qnm.N;

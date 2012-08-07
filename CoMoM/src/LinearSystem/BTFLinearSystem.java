@@ -63,7 +63,7 @@ public class BTFLinearSystem extends LinearSystem {
 		//Create rhs vector
 		rhs = new BigRational[basis.getSize()];
 		
-		//printFullMatrices();
+		printFullMatrices();
 	}
 	
 	private void generate() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
@@ -104,12 +104,12 @@ public class BTFLinearSystem extends LinearSystem {
 		c  = (CBlock)   c_block.subBlock(current_class);
 		
 		System.out.print("Matrices for class " + current_class + "\n\n\n");
-		printWorkingMatrices();		
+		//printWorkingMatrices();		
 	}
 	
 	
 	public void solve() throws OperationNotSupportedException, InconsistentLinearSystemException, InternalErrorException, BTFMatrixErrorException {
-		System.out.println("Solving System...\n");
+	//	System.out.println("Solving System...\n");
 		
 		basis.startBasisComputation();
 		//System.out.println("BEFORE: ");
@@ -159,15 +159,8 @@ public class BTFLinearSystem extends LinearSystem {
 		*/
 	}
 	
-	public void storeNormalisingConstant() throws InternalErrorException {
-		BigRational G = basis.getNormalisingConstant();
-		System.out.println("G = " + G);
-		qnm.setNormalisingConstant(G);			
-	}
+	
 
-	public void computePerformanceMeasures() throws InternalErrorException {
-		basis.computePerformanceMeasures();		
-	}
 	
 	private void printFullMatrices() {
 		print(x_block, y_block, b1_block, b2_block, c_block);

@@ -1,15 +1,16 @@
-package Comparators;
+package Basis.Comparators;
 
 import java.util.Comparator;
 
 import DataStructures.PopulationChangeVector;
 
-public class SortVectorByhThenRmnz implements Comparator<PopulationChangeVector>{
-
-/**
-     * Compares two PopulationChangeVector objects.* for the fine grain Block Triangular Form.
+public class SortVectorMatLab implements Comparator<PopulationChangeVector> {
+	
+	/**
+     * Compares two PopulationChangeVector objects according to the same order as in 
+     * the MatLab implementation
      * First vectors are compared at the number of non zero elements (h)
-     * Then the position of those elements based on right most nonzero
+     * Then the position of those elements
      * Then the value at those positions, left to right
      * leftmost non-zero is the smaller.
      *
@@ -17,7 +18,7 @@ public class SortVectorByhThenRmnz implements Comparator<PopulationChangeVector>
      * @return -1 if this < o, 0 if this = o, 1 if this > o
      */
     @Override
-    public int compare(PopulationChangeVector v1, PopulationChangeVector v2) {    	
+    public int compare(PopulationChangeVector v1, PopulationChangeVector v2) {   
 
     	if (v1.size() < v2.size()) {
             return -1;
@@ -32,13 +33,13 @@ public class SortVectorByhThenRmnz implements Comparator<PopulationChangeVector>
         		return 1;
         	}else {
         		// Vectors have the same number of non zero elements
-        		// Check 2: vector with rightmost non-zero value is greater
-        		for (int j = v1.size() - 1 ; j >= 0; j--) {
+        		// Check 2: Compare non zero element positions by leftmost non zero
+        		for (int j = 0; j < v1.size(); j++) {
         	         if (v1.get(j) == 0 && v2.get(j) > 0 ) {
-        	             return -1; // v2 has the right-most non zero
+        	             return 1; // v1 has the left-most zero
         	         }
         	         if (v1.get(j) > 0 && v2.get(j) == 0) {
-        	             return 1;
+        	             return -1;
         		     }
         		}        		
         		// Vectors have non zero elements in same position

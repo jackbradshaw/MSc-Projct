@@ -1,10 +1,8 @@
 package Basis;
 
-import java.util.Collections;
-
 import Utilities.MiscFunctions;
 import Basis.CoMoMBasis;
-import Comparators.SortVectorByRightmostNZ;
+import Basis.Comparators.SortVectorByRightmostNZ;
 import DataStructures.PopulationChangeVector;
 import DataStructures.QNModel;
 import Exceptions.InternalErrorException;
@@ -17,6 +15,7 @@ public class CoMoMReorderingBasis extends CoMoMBasis {
 	
 	public CoMoMReorderingBasis(QNModel m) {
 		super(m);
+		setComparator(new SortVectorByRightmostNZ());
 		order_offset = new int[size];
 		previous_order_offset = new int[size];
 	}	
@@ -37,9 +36,7 @@ public class CoMoMReorderingBasis extends CoMoMBasis {
 		for(int i = 0; i < basis.length; i++) {	
 			
 			basis[i + order_offset[i]] = previous_basis[i+previous_order_offset[i]];
-		}
-		
-		
+		}		
 	}
 	
 	public void updateOffset(int current_class) {
@@ -85,10 +82,5 @@ public class CoMoMReorderingBasis extends CoMoMBasis {
 	
 	public int[] getOrderOffset() {
 		return order_offset;
-	}
-
-	@Override
-	protected void sort() {
-		Collections.sort(order, new SortVectorByRightmostNZ());
 	}
 }

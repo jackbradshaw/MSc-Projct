@@ -156,17 +156,21 @@ public abstract class MacroBlock extends ComponentBlock{
 	 * @throws BTFMatrixErrorException
 	 */
 	private int findMicroBlock(int position) throws BTFMatrixErrorException {
+		
+		//Invalid position passed:
 		if(position < 0) throw new  BTFMatrixErrorException("Trying to find macro block containing index: " + position);
 		
 		int block = 0;
 		
+		//Linear Search to locate containing MacroBlock //TODO binary search
 		for(int i = 1; i < micro_blocks.length; i++) {
 			if(position >= (micro_blocks[i].getStartingRow())) {
 				block++;
 			}
 		}
-		
+		//Invalid position passed, size of block overshot!
 		if(block >=  micro_blocks.length) throw new  BTFMatrixErrorException("Ran out of micro blocks! position = " + position);
+		
 		return block;
 	}
 	

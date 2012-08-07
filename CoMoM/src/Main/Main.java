@@ -6,7 +6,6 @@ import Basis.BTFCoMoMBasis;
 import Basis.CoMoMBasis;
 import Basis.CoMoMBasisMLorder;
 import Basis.CoMoMReorderingBasis;
-import Basis.SortedCoMoMBasis;
 import DataStructures.BigRational;
 import DataStructures.PopulationChangeVector;
 import DataStructures.PopulationVector;
