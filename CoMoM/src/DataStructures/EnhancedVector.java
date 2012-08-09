@@ -382,6 +382,23 @@ public class EnhancedVector extends ArrayList<Integer> implements Comparable<Enh
     	}
     	System.out.print("]" + newLine);
     }
+
+	 /**
+     * This method is used to count the elements of the EnhancedVvector that are 
+     * greater than zero.
+     *
+     * @return The number of non-zero elements
+     */
+    public int countNonZeroElements() {
+        int count = 0;
+        for (Integer el : this) {
+            if (el > 0) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
    
 
 }

@@ -15,11 +15,13 @@ import Exceptions.BTFMatrixErrorException;
 import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InputFileParserException;
 import Exceptions.InternalErrorException;
-import LinearSystem.TopLevelBlocks.B1Block;
-import LinearSystem.TopLevelBlocks.B2Block;
-import LinearSystem.TopLevelBlocks.CBlock;
-import LinearSystem.TopLevelBlocks.XBlock;
-import LinearSystem.TopLevelBlocks.YBlock;
+import LinearSystem.BTF.ComponentBlock;
+import LinearSystem.BTF.Position;
+import LinearSystem.BTF.TopLevelBlocks.B1Block;
+import LinearSystem.BTF.TopLevelBlocks.B2Block;
+import LinearSystem.BTF.TopLevelBlocks.CBlock;
+import LinearSystem.BTF.TopLevelBlocks.XBlock;
+import LinearSystem.BTF.TopLevelBlocks.YBlock;
 import QueuingNet.ConvolutionSolver;
 import Utilities.MiscFunctions;
 

@@ -10,7 +10,7 @@ import Exceptions.BTFMatrixErrorException;
 import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InternalErrorException;
 import LinearSystem.LinearSystem;
-import LinearSystem.SimpleLinearSystem;
+import LinearSystem.Simple.SimpleLinearSystem;
 
 public class CoMoMSolver extends QNSolver {
 
@@ -85,6 +85,6 @@ private static int M,R;
     
     @Override
     public void computePerformanceMeasures() throws InternalErrorException {
-    	basis.computePerformanceMeasures();
+    	system.computePerformanceMeasures();
     }
 }

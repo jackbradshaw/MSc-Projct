@@ -1,0 +1,452 @@
+<class-diagram version="1.0.9" icons="false" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.ATopLevelBlock" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/ATopLevelBlock.java" binary="false">    
+    <position height="-1" width="-1" x="87" y="361"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="2" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.B1Block" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/B1Block.java" binary="false">    
+    <position height="-1" width="-1" x="148" y="205"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="3" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.B2Block" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/B2Block.java" binary="false">    
+    <position height="-1" width="-1" x="145" y="239"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="4" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.CBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/CBlock.java" binary="false">    
+    <position height="-1" width="-1" x="148" y="269"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="5" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.MacroBlockSelectionPolicy" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/MacroBlockSelectionPolicy.java" binary="false">    
+    <position height="-1" width="-1" x="92" y="36"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="6" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.TopLevelBlock" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/TopLevelBlock.java" binary="false">    
+    <position height="-1" width="-1" x="86" y="151"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="7" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.TypeTwoBlocks" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/TypeTwoBlocks.java" binary="false">    
+    <position height="-1" width="-1" x="255" y="51"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="8" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.XBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/XBlock.java" binary="false">    
+    <position height="-1" width="-1" x="82" y="417"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="9" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.YBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/YBlock.java" binary="false">    
+    <position height="-1" width="-1" x="83" y="455"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="10" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.TopLevelBlocks.TypeOneBlocks" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/TopLevelBlocks/TypeOneBlocks.java" binary="false">    
+    <position height="-1" width="-1" x="258" y="18"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="11" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.B1MacroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/B1MacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="547" y="190"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="12" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.B2MacroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/B2MacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="561" y="225"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="13" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.BlockMatrix" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/BlockMatrix.java" binary="false">    
+    <position height="-1" width="-1" x="459" y="314"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="14" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.CMacroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/CMacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="576" y="271"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="15" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.MacroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/MacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="483" y="141"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="16" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.XMacroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/XMacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="415" y="191"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="17" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.YMacroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/YMacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="424" y="229"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="18" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.YSecondaryMacroBlock" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/YSecondaryMacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="460" y="416"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="19" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.SecondaryMacroBlock" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/SecondaryMacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="456" y="363"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="20" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.TypeOneBlocks" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/TypeOneBlocks.java" binary="false">    
+    <position height="-1" width="-1" x="659" y="22"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="21" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.TypeTwoBlocks" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/TypeTwoBlocks.java" binary="false">    
+    <position height="-1" width="-1" x="663" y="61"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="22" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.XSecondaryMacroBlock" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/XSecondaryMacroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="464" y="453"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="23" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MacroBlocks.MicroBlockSelectionPolicy" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/MacroBlocks/MicroBlockSelectionPolicy.java" binary="false">    
+    <position height="-1" width="-1" x="479" y="42"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="24" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.MicroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/MicroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="763" y="145"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="25" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.B1MicroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/B1MicroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="883" y="142"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="26" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.B2MicroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/B2MicroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="885" y="180"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="27" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.CMicroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/CMicroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="889" y="219"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="28" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.LUP_Decomposition" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/LUP_Decomposition.java" binary="false">    
+    <position height="-1" width="-1" x="723" y="362"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="29" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.MatrixMicroBlock" 
+    project="CoMoM" file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/MatrixMicroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="749" y="196"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="30" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.XMicroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/XMicroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="716" y="259"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <class id="31" corner="BOTTOM_RIGHT" language="java" name="LinearSystem.BTF.MicroBlocks.YMicroBlock" project="CoMoM" 
+    file="/CoMoM/src/LinearSystem/BTF/MicroBlocks/YMicroBlock.java" binary="false">    
+    <position height="-1" width="-1" x="829" y="257"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+      visibility="false">      
+      <attributes public="false" package="false" protected="false" private="false"/>      
+      <operations public="false" package="false" protected="false" private="false"/>    
+    </display>  
+  </class>  
+  <generalization id="32">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="33">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="35">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="36" name="full_block"/>      
+      <multiplicity id="37" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="38">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="39">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="40">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="41" name="macro_blocks"/>      
+      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="44" name="matrix"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <association id="47">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="48" name="sec_macro_blocks"/>      
+      <multiplicity id="49" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="50">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <generalization id="51">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="53">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="54">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="55" name="LUP"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="57">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="58">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="59">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="60">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <generalization id="61">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <association id="62">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="63" name="selection_policy"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <generalization id="66">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <association id="67">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="68" name="micro_blocks"/>      
+      <multiplicity id="69" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <generalization id="71">    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="29"/>  
+  </generalization>  
+  <association id="72">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="73" name="full_block"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="75">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="76">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <association id="77">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="78" name="selection_policy"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="80">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <generalization id="81">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="23"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" 
+    visibility="false">    
+    <attributes public="false" package="false" protected="false" private="false"/>    
+    <operations public="false" package="false" protected="false" private="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

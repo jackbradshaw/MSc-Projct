@@ -1,8 +1,13 @@
 package Basis;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import DataStructures.BigRational;
+import DataStructures.EnhancedVector;
+import DataStructures.PopulationChangeVector;
 import DataStructures.QNModel;
 import Exceptions.InternalErrorException;
 
@@ -14,10 +19,21 @@ public abstract class Basis {
 	protected QNModel qnm;
 	
 	/**
+	 * Data Structure to hold the ordering of PopualtionChangeVectors
+	 */
+	protected ArrayList<PopulationChangeVector> order;	
+	
+	/**
 	 * Variables to store qnm fields for easy access	
 	 **/	
 	protected int R;
 	protected int M;
+	
+	/**
+	 * Comparator with which to sort the Vector,
+	 * can be set using setComparator()
+	 */
+	private Comparator<EnhancedVector> vector_comparator;
 	
 	/**
 	 * The basis vector of normalising constants
@@ -61,6 +77,28 @@ public abstract class Basis {
 	public abstract void initialiseBasis() throws InternalErrorException;
 	
 	public abstract void initialiseForClass(int current_class) throws InternalErrorException;
+	
+	/**
+	 * A subclass can choose a vector comparator this method sets the comparator and uses it to sort
+	 * the ordering
+	 * @param comparator
+	 */
+	protected void setComparator(Comparator<EnhancedVector> comparator) {
+		vector_comparator = comparator;
+		sort();		
+	}
+	
+	/**
+	 * Sorts the PopulationChangeVectors according to the 'vector_comparator'
+	 */
+	protected final void sort() {
+		if(vector_comparator == null) {
+			//No comparator specifed, do nothing.
+			return;
+		} else { //sort the ordering
+			Collections.sort(order, vector_comparator);
+		}
+	}
 	
 	/**
 	 * Calculates the size of the basis to be store in variable size

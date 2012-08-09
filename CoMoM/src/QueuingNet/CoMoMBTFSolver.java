@@ -5,7 +5,7 @@ import DataStructures.QNModel;
 import Exceptions.BTFMatrixErrorException;
 import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InternalErrorException;
-import LinearSystem.BTFLinearSystem;
+import LinearSystem.BTF.BTFLinearSystem;
 
 public class CoMoMBTFSolver extends CoMoMSolver {
 

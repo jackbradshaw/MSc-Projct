@@ -14,10 +14,10 @@ import DataStructures.Tuple;
 import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InputFileParserException;
 import Exceptions.InternalErrorException;
+import LinearSystem.Simple.Matrix.Matrix;
+import LinearSystem.Simple.Matrix.StandardMatrix;
 import LinearSystemSolver.SimpleSolver;
 import LinearSystemSolver.Solver;
-import Matrix.Matrix;
-import Matrix.StandardMatrix;
 import Utilities.MiscFunctions;
 
 public class Main {
@@ -110,7 +110,7 @@ public class Main {
 		System.out.println("B:");
 		B.print();
 		
-		solver.initialise(A.getArray(), A.get_update_list(), basis.getUncomputables());
+		solver.initialise(A.getArray(), A.getUpdateList(), basis.getUncomputables());
 				
 		for(int current_class_population = current_N.get(current_class - 1); 
 				current_class_population <= target_N.get(current_class - 1); 

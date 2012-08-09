@@ -2,9 +2,10 @@ package Basis.Comparators;
 
 import java.util.Comparator;
 
+import DataStructures.EnhancedVector;
 import DataStructures.PopulationChangeVector;
 
-public class SortVectorByhThenRmnz implements Comparator<PopulationChangeVector>{
+public class SortVectorByhThenRmnz implements Comparator<EnhancedVector>{
 
 	/**
      * Compares two PopulationChangeVector objects.* for the fine grain Block Triangular Form.
@@ -17,7 +18,7 @@ public class SortVectorByhThenRmnz implements Comparator<PopulationChangeVector>
      * @return -1 if this < o, 0 if this = o, 1 if this > o
      */
     @Override
-    public int compare(PopulationChangeVector v1, PopulationChangeVector v2) {    	
+    public int compare(EnhancedVector v1,EnhancedVector v2) {    	
 
     	if (v1.size() < v2.size()) {
             return -1;

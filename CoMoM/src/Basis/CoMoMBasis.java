@@ -12,18 +12,6 @@ import Utilities.MiscFunctions;
 
 public class CoMoMBasis extends Basis{		
 	
-	
-	/**
-	 * Data Structure to hold the ordering of PopualtionChangeVectors
-	 */
-	protected ArrayList<PopulationChangeVector> order;	
-	
-	/**
-	 * Comparator with which to sort the PopulationChangeVectors,
-	 * can be set using setComparator()
-	 */
-	private Comparator<PopulationChangeVector> vector_comparator;
-	
 	/**
 	 * Constructor
 	 * @param m The Queueing Network Model under study
@@ -38,6 +26,7 @@ public class CoMoMBasis extends Basis{
 		
 		//Generate all the possible population change vectors
 		generate();		
+		
 	}
 	
 	/**
@@ -48,40 +37,18 @@ public class CoMoMBasis extends Basis{
 		
 		PopulationChangeVector v = new PopulationChangeVector(0,R);		
 		order.add(v);
-		int current_position = 1;
-		for(int i = 0; i < M; i++) {
+		int current_list_end= 1;
+		for(int i = 1; i <= M; i++) {
 			for(int j = 0; j < R - 1; j++) {
-				for(int k = current_position - MiscFunctions.binomialCoefficient(R - 1 - j + i - 1, i); 
-					k < current_position; k++) {
+				for(int k = current_list_end - MiscFunctions.binomialCoefficient(R - 1 - j + i - 2, i - 1); 
+					k < current_list_end; k++) {
 						v = order.get(k);						
 						v.plusOne(j+1);
 						order.add(v.copy());						
 						v.restore();
 				}				
 			}
-			current_position += MiscFunctions.binomialCoefficient(R - 1 + i , i + 1);			
-		}
-	}
-	
-	/**
-	 * A subclass can choose a vector comparator this method sets the comparator and uses it to sort
-	 * the ordering
-	 * @param comparator
-	 */
-	protected void setComparator(Comparator<PopulationChangeVector> comparator) {
-		vector_comparator = comparator;
-		sort();		
-	}
-	
-	/**
-	 * Sorts the PopulationChangeVectors according to the 'vector_comparator'
-	 */
-	protected final void sort() {
-		if(vector_comparator == null) {
-			//No comparator specifed, do nothing.
-			return;
-		} else { //sort the ordering
-			Collections.sort(order, vector_comparator);
+			current_list_end += MiscFunctions.binomialCoefficient(R - 1 + i - 1 , i );			
 		}
 	}
 	

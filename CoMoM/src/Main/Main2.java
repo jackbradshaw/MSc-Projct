@@ -16,11 +16,11 @@ import Exceptions.BTFMatrixErrorException;
 import Exceptions.InconsistentLinearSystemException;
 import Exceptions.InputFileParserException;
 import Exceptions.InternalErrorException;
-import LinearSystem.BTFLinearSystem;
 import LinearSystem.LinearSystem;
-import LinearSystem.SimpleLinearSystem;
+import LinearSystem.BTF.BTFLinearSystem;
+import LinearSystem.Simple.SimpleLinearSystem;
+import LinearSystem.Simple.Matrix.StandardMatrix;
 import LinearSystemSolver.SimpleSolver;
-import Matrix.StandardMatrix;
 
 public class Main2 {
 	
@@ -54,8 +54,8 @@ public class Main2 {
 		System.out.println("\n");
 		
 		basis =  new BTFCoMoMBasis(qnm);
-		//system = new BTFLinearSystem(qnm, basis);
-		system = new SimpleLinearSystem(qnm, basis,1);
+		system = new BTFLinearSystem(qnm, basis);
+		//system = new SimpleLinearSystem(qnm, basis,1);
 		
 		
 		try {

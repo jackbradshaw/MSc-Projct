@@ -5,7 +5,7 @@ import javax.naming.OperationNotSupportedException;
 import Basis.BTFCoMoMBasis;
 import DataStructures.QNModel;
 import Exceptions.InternalErrorException;
-import LinearSystem.SimpleLinearSystem;
+import LinearSystem.Simple.SimpleLinearSystem;
 
 public class CoMoMSimpleSolver extends CoMoMSolver {
 
