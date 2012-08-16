@@ -81,8 +81,8 @@ public class LUP_Decomposition {
 	 * @throws InconsistentLinearSystemException If matrix is singular
 	 */
 	private void decompose() throws InconsistentLinearSystemException {
-		System.out.println("A_prime: ");
-		MiscFunctions.printMatrix(A_prime);
+		//System.out.println("A_prime: ");
+		//MiscFunctions.printMatrix(A_prime);
 		BigRational p;
 		BigRational abs_A;
 		int k_prime = -1;

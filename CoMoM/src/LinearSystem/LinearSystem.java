@@ -21,12 +21,6 @@ public abstract class LinearSystem {
 		this.basis = basis;
 		basis.initialiseBasis();	
 	}
-	
-	public void storeNormalisingConstant() throws InternalErrorException {
-		BigRational G = basis.getNormalisingConstant();
-		System.out.println("G = " + G);
-		qnm.setNormalisingConstant(G);			
-	}
 
 	public void computePerformanceMeasures() throws InternalErrorException {
 		basis.computePerformanceMeasures();		
@@ -38,7 +32,6 @@ public abstract class LinearSystem {
 	
 	public final void initialiseForClass(PopulationVector current_N, int current_class) 
 			throws InternalErrorException, OperationNotSupportedException, BTFMatrixErrorException, InconsistentLinearSystemException {
-		current_N.plusOne(current_class);
 		basis.initialiseForClass(current_class);
 		initialiseMatricesForClass(current_N, current_class);
 	}

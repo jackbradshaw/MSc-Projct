@@ -82,16 +82,20 @@ public class B1MicroBlock extends MicroBlock {
 
 	}
 			
+	private BigRational multiplyRow(int index){
+		if(array[index][0] != 0) {
+			return basis.getOldValue(getCol(index)).multiply(getValue(index));  //TODO copy()?
+		} else {
+			return BigRational.ZERO;
+		}
+	}
+	
 	@Override
-	public void multiply(BigRational[] result, BigRational[] input)
+	public void multiply(BigRational[] result)
 			throws BTFMatrixErrorException {
 		
 		for(int i = 0; i < size.row; i++) {
-			if(array[i][0] != 0) {
-				result[position.row + i] = input[getCol(i)].multiply(getValue(i));  //TODO copy()?
-			} else {
-				result[position.row + i] = BigRational.ZERO;
-			}
+			result[position.row + i] = multiplyRow(i);
 		}
 	}
 	
@@ -108,11 +112,7 @@ public class B1MicroBlock extends MicroBlock {
 	@Override
 	public void solve(BigRational[] rhs) {
 		for(int i = 0; i < size.row; i++) {
-			if(array[i][0] != 0) {
-				rhs[position.row + i] = basis.getOldValue(getCol(i)).multiply(getValue(i));  //TODO copy()?
-			} else {
-				rhs[position.row + i] = BigRational.ZERO;
-			}
+			rhs[position.row + i] = multiplyRow(i);			
 		}		
 	}
 }

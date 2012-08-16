@@ -210,10 +210,10 @@ public abstract class MacroBlock extends ComponentBlock{
 	}
 	
 	@Override
-	public void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException {
+	public void multiply(BigRational[] result) throws BTFMatrixErrorException {
 		//multiply all micro blocks
 		for(int i = 0; i < micro_blocks.length; i++) {
-			micro_blocks[i].multiply(result, input);
+			micro_blocks[i].multiply(result);
 		}		
 	}
 	

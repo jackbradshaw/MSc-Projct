@@ -106,7 +106,9 @@ public class CoMoMBasis extends Basis{
 	 */	
 	@Override
 	public void initialiseBasis() throws InternalErrorException {
-		System.out.println("Intialising Basis");		
+		
+		System.out.println("Intialising Basis");
+			
 		// Negative populations have normalising constant equal to ZERO
 		for( int i = 0 ; i < size; i++) {
 			basis[i] = BigRational.ZERO;

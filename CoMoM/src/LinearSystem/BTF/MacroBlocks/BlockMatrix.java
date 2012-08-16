@@ -3,6 +3,7 @@ package LinearSystem.BTF.MacroBlocks;
 import Basis.CoMoMBasis;
 import DataStructures.BigRational;
 import Exceptions.BTFMatrixErrorException;
+import Exceptions.UndefinedMultiplyException;
 import LinearSystem.BTF.Position;
 
 public class BlockMatrix {
@@ -113,9 +114,13 @@ public class BlockMatrix {
 		}
 	}
 	
-	public void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException {
+	public Position getSize() {
+		return new Position(rows, cols);
+	}
+	
+	public void multiply(BigRational[] result) throws BTFMatrixErrorException {
 		
-		if(cols + position.col > input.length) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");		
+		if(cols + position.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");;		
 		
 		int block_starting_col = 0;
 		int block_starting_row = 0;
@@ -124,37 +129,45 @@ public class BlockMatrix {
 			block_starting_row = i * rows_in_blocks;
             for (int j = 0; j < block_cols; j++) {
             	block_starting_col = j * cols_in_blocks;
-                block_multiply(matrix[i][j], result, input, position.row + block_starting_row, position.col + block_starting_col);                
+                block_multiply(matrix[i][j], result, position.row + block_starting_row, position.col + block_starting_col);                
             }
 		}		
 	}		
 	
-	private void block_multiply(BigRational[][] array, BigRational[] result, BigRational[] input, int starting_row, int starting_col) throws BTFMatrixErrorException {
+	private void block_multiply(BigRational[][] array, BigRational[] result, int starting_row, int starting_col) throws BTFMatrixErrorException {
 		
 		int rows = array.length;
 		int cols = array[0].length;
 		
-		if(starting_col + cols > input.length) throw new BTFMatrixErrorException("Incompatible matrix and vector size when multiplying block");			
+		if(cols + position.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");		
 
 		for (int i = 0; i < rows; i++) {           
-            for (int j = 0; j < cols; j++) {
-                if (!array[i][j].isZero()) {
-                    if (input[j + starting_col].isPositive()) {
-                        result[starting_row + i] = result[starting_row +i].add(array[i][j].multiply(input[j + starting_col]));
-                    } else if (input[j + starting_col].isUndefined()) {
-                        result[starting_row + i] = new BigRational(-1);
-                        result[starting_row + i].makeUndefined();
-                        break;
-                    }
-                }
+           	try {
+                result[starting_row + i] = multiplyBlockRow(array, i, starting_col);
+    		} catch (UndefinedMultiplyException e) {
+    			result[starting_row + i] = new BigRational(-1);
+            	result[starting_row + i].makeUndefined();    		
             }
 		}		
 	}
-	
-	public Position getSize() {
-		return new Position(rows, cols);
-	}
 
+	private BigRational multiplyBlockRow(BigRational[][] array, int index, int starting_col) throws UndefinedMultiplyException {
+		
+		BigRational result = BigRational.ZERO;
+		int cols = array[0].length;
+		
+		for (int j = 0; j < cols; j++) {
+			if (!array[index][j].isZero()) {
+				if (basis.getNewValue(j + starting_col).isPositive()) {
+					result = result.add((array[index][j].multiply(basis.getNewValue(j + starting_col))));						
+				} else if (basis.getNewValue(j + starting_col).isUndefined()) { 
+					throw new UndefinedMultiplyException();               	                 
+				}   
+			}
+		}
+		return result;
+    }
+	
 	public void solve(BigRational[] rhs) throws BTFMatrixErrorException {
 		if(cols + position.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when solving");		
 		
@@ -178,18 +191,12 @@ public class BlockMatrix {
 		if(starting_col + cols > basis.getSize()) throw new BTFMatrixErrorException("Incompatible matrix and vector size when multiplying block");			
 
 		for (int i = 0; i < rows; i++) {               
-			for (int j = 0; j < cols; j++) {
-                if (!array[i][j].isZero()) {
-                    if (basis.getNewValue(j + starting_col).isPositive()) {
-                    	rhs[starting_row +i] = rhs[starting_row +i].add((array[i][j].multiply(basis.getNewValue(j + starting_col))).negate());
-                       
-                    } else if (basis.getNewValue(j + starting_col).isUndefined()) { 
-                    	rhs[starting_row + i] = new BigRational(-1);
-                        rhs[starting_row + i].makeUndefined();
-                        break;
-                    }
-                }
-            }
+			try {
+	        	rhs[starting_row + i] = rhs[starting_row + i].add(multiplyBlockRow(array, i, starting_col).negate());
+			} catch (UndefinedMultiplyException e) {
+				rhs[starting_row + i] = new BigRational(-1);
+	            rhs[starting_row + i].makeUndefined();				
+			}
 		}		
 	}
 }

@@ -154,7 +154,7 @@ public abstract class ComponentBlock {
 	 * @param input Input vector
 	 * @param result Result vector
 	 */
-	public abstract void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException;
+	public abstract void multiply(BigRational[] result) throws BTFMatrixErrorException;
 	
 	/**
 	 * TODO

@@ -36,13 +36,9 @@ public abstract class Basis {
 	private Comparator<EnhancedVector> vector_comparator;
 	
 	/**
-	 * The basis vector of normalising constants
+	 * The vectors in which to store the basis values
 	 */
-	protected BigRational[] basis;
-	
-	/**
-	 * The previous basis vector of normalising constants in the sequence of computation
-	 */
+	protected BigRational[] basis;	
 	protected BigRational[] previous_basis;
 	
 	/**
@@ -76,6 +72,11 @@ public abstract class Basis {
 	 */	
 	public abstract void initialiseBasis() throws InternalErrorException;
 	
+	/**
+	 * Initialises the basis for recustion on the current class
+	 * @param current_class The class to initialise for.
+	 * @throws InternalErrorException
+	 */
 	public abstract void initialiseForClass(int current_class) throws InternalErrorException;
 	
 	/**
@@ -93,7 +94,7 @@ public abstract class Basis {
 	 */
 	protected final void sort() {
 		if(vector_comparator == null) {
-			//No comparator specifed, do nothing.
+			//No comparator specified, do nothing.
 			return;
 		} else { //sort the ordering
 			Collections.sort(order, vector_comparator);
@@ -113,20 +114,6 @@ public abstract class Basis {
 	}
 	
 	/**
-	 * Returns the basis vector for mutation
-	 */
-	public BigRational[] getBasis() {
-		return basis;
-	}
-	
-	/**
-	 * Returns the previous basis vector 
-	 */
-	public BigRational[] getPreviousBasis() {
-		return previous_basis;
-	}
-	
-	/**
 	 * Computes Mean Throughput and Mean Queue Length performance indices
 	 * and stores them in the queueing network model object, qnm
 	 * @throws InternalErrorException
@@ -139,17 +126,6 @@ public abstract class Basis {
 	 * @throws InternalErrorException 
 	 */
 	public abstract BigRational getNormalisingConstant() throws InternalErrorException;
-	
-	/**
-	 * Sets the basis vector 
-	 */
-	//TODO think about this, copies references, garbage collection....
-	public void setBasis(BigRational[] v) {
-		for(int i = 0; i < basis.length; i++) {	
-			previous_basis[i] = basis[i].copy();
-		}
-		basis = v;
-	}
 	
 	public void reset_uncomputables() {
 		for(int i = 0; i < size; i++) {
@@ -166,20 +142,21 @@ public abstract class Basis {
 	}
 	
 	public BigRational getOldValue(int index) {
-		return previous_basis[index].copy();
+		return previous_basis[index];
 	}
 	
 	public BigRational getNewValue(int index) {
-		return basis[index].copy();
+		return basis[index];
 	}
 	
 	public void setValue(BigRational value, int index) {
 		basis[index] = value.copy();
+		
 	}
 	
 	public void startBasisComputation() {
-		for(int i = 0; i < basis.length; i++) {	
-			previous_basis[i] = basis[i].copy();
-		}
+		BigRational[] temp_reference = basis;
+		basis = previous_basis;
+		previous_basis = temp_reference;
 	}
 }

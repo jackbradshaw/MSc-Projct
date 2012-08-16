@@ -37,9 +37,9 @@ public class Main2 {
 	public static void main(String[] args) throws InputFileParserException, InternalErrorException, BTFMatrixErrorException, InconsistentLinearSystemException {
 		
 		//qnm = new QNModel("models\\test_model_4_comp_larger.txt");
-		qnm = new QNModel("models\\test_model_5.txt");
+		//qnm = new QNModel("models\\model8.txt");
 		//qnm = new QNModel("models\\test_model_2.txt");
-		//qnm = new QNModel("models\\test_model_7.txt");
+		qnm = new QNModel("models\\test_model_7.txt");
 		//qnm = new QNModel("models\\model10.txt");
 		//qnm = new QNModel("models\\big_model.txt");
 		
@@ -47,7 +47,7 @@ public class Main2 {
 		
 		M = qnm.M;
 		R = qnm.R;	
-		target_N = qnm.N;
+		target_N = qnm.getPopulationVector();
 		
 		System.out.println("Model under study:\n");
 		qnm.printModel();
@@ -82,13 +82,16 @@ public class Main2 {
 			System.out.println("Working on class " + current_class);
 			System.out.println("Current Population: " + current_N);
 			
+			current_N.plusOne(current_class);
 			system.initialiseForClass(current_N, current_class);
 		
 			solveForClass(current_class);			
 		}						
-		
+
 		//Store the computed normalsing constant
-		system.storeNormalisingConstant();			
+		BigRational G = basis.getNormalisingConstant();
+		System.out.println("G = " + G);
+		qnm.setNormalisingConstant(G);				
 		
 	}
 	

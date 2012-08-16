@@ -1,6 +1,7 @@
 package LinearSystem.Simple.Matrix;
 
 import Utilities.MiscFunctions;
+import Basis.CoMoMBasis;
 import DataStructures.BigRational;
 import DataStructures.QNModel;
 
@@ -8,8 +9,8 @@ public class StandardMatrix extends Matrix {
 
 	private BigRational[][] array;
 	
-	public StandardMatrix( int size) {
-		super(size);
+	public StandardMatrix( CoMoMBasis basis, int size) {
+		super(basis, size);
 		array = new BigRational[size][size];		
 	}
 	
@@ -30,12 +31,12 @@ public class StandardMatrix extends Matrix {
 	}	
 	
 	@Override
-	public BigRational[] multiply(BigRational[] v) {
-		//Taken from MiscFunctions		
+	public BigRational[] multiply() {
+	
 		BigRational[][] A = array;
         int rowsA = A.length;
         int columnsA = A[0].length;
-        int rowsV = v.length;
+        int rowsV = basis.getSize();
 
         if (columnsA == rowsV) {
             BigRational[] c = new BigRational[rowsA];
@@ -43,9 +44,9 @@ public class StandardMatrix extends Matrix {
                 c[i] = BigRational.ZERO;
                 for (int j = 0; j < columnsA; j++) {
                     if (!A[i][j].isZero()) {
-                        if (v[j].isPositive()) {
-                            c[i] = c[i].add(A[i][j].multiply(v[j]));
-                        } else if (v[j].isUndefined()) {
+                        if (basis.getOldValue(j).isPositive()) {
+                            c[i] = c[i].add(A[i][j].multiply(basis.getOldValue(j)));
+                        } else if (basis.getOldValue(j).isUndefined()) {
                             c[i] = new BigRational(-1);
                             c[i].makeUndefined();
                             break;

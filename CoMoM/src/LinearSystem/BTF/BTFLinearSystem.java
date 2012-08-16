@@ -1,5 +1,9 @@
 package LinearSystem.BTF;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 import javax.naming.OperationNotSupportedException;
 
 import Basis.CoMoMBasis;
@@ -17,6 +21,7 @@ import LinearSystem.BTF.TopLevelBlocks.CBlock;
 import LinearSystem.BTF.TopLevelBlocks.XBlock;
 import LinearSystem.BTF.TopLevelBlocks.YBlock;
 import Utilities.MiscFunctions;
+import Utilities.Timer;
 
 public class BTFLinearSystem extends LinearSystem {
 	
@@ -37,10 +42,34 @@ public class BTFLinearSystem extends LinearSystem {
 	//Vector for storing intermediate solution
 	BigRational[] rhs;
 	
+	//Timers and totals for evaluation 
+	private Timer generateTimer;
+	private Timer shallowCopyTimer;
+	
+	private  Timer B1Timer;
+	private  Timer B2Timer;
+	private  Timer XTimer;
+	private  Timer CTimer;
+	private  Timer YTimer;
+	private  Timer solveTimer;
+	
+	private String memory_used;
+	
 	public BTFLinearSystem(QNModel qnm, CoMoMBasis basis)
 			throws InternalErrorException, BTFMatrixErrorException, InconsistentLinearSystemException {
 		
-		super(qnm, basis);		
+		super(qnm, basis);	
+		
+		B1Timer = new Timer();
+		B2Timer = new Timer();
+		XTimer = new Timer();
+		CTimer  = new Timer();
+		YTimer  = new Timer();
+		
+		solveTimer  = new Timer();
+		
+		generateTimer = new Timer();
+		generateTimer.start();
 		
 		//Create and initialise the component blocks for the final class
 		x_block  = new XBlock (qnm, basis);
@@ -61,10 +90,12 @@ public class BTFLinearSystem extends LinearSystem {
 		//Add PCs and CEs to the matrices 
 		generate();
 		
+		generateTimer.pause();
+		memory_used = MiscFunctions.memoryUsage();
 		//Create rhs vector
 		rhs = new BigRational[basis.getSize()];
 		
-		printFullMatrices();
+		//printFullMatrices();
 	}
 	
 	private void generate() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
@@ -94,7 +125,19 @@ public class BTFLinearSystem extends LinearSystem {
 	@Override
 	public void initialiseMatricesForClass(PopulationVector current_N, int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		
+		//reset timers
+		B1Timer = new Timer();
+		B2Timer = new Timer();
+		XTimer = new Timer();
+		CTimer  = new Timer();
+		YTimer  = new Timer();
+		
+		solveTimer = new Timer();
+		
 		ComponentBlock.setCurrentClassPopulation(1);		
+		
+		shallowCopyTimer = new Timer();
+		shallowCopyTimer.start();
 		
 		//create sub-blocks for the current class
 		x  = (XBlock)   x_block.subBlock(current_class);
@@ -103,6 +146,8 @@ public class BTFLinearSystem extends LinearSystem {
 		b2 = (B2Block) b2_block.subBlock(current_class);
 		c  = (CBlock)   c_block.subBlock(current_class);
 		
+		shallowCopyTimer.pause();
+		
 		System.out.print("Matrices for class " + current_class + "\n\n\n");
 		//printWorkingMatrices();		
 	}
@@ -110,23 +155,39 @@ public class BTFLinearSystem extends LinearSystem {
 	@Override
 	public void solve() throws OperationNotSupportedException, InconsistentLinearSystemException, InternalErrorException, BTFMatrixErrorException {
 	//	System.out.println("Solving System...\n");
+		solveTimer.start();
 		
 		basis.startBasisComputation();
 		//System.out.println("BEFORE: ");
-		//basis.print_values();
+		//basis.print_values();		
+
 		
 		//Order of solving is important:
 		//B First
+		B1Timer.start(); 
 		b1.solve(rhs);
+		B1Timer.pause(); 
+		
+		B2Timer.start();
 		b2.solve(rhs);
+		B2Timer.pause();
+		
+		CTimer.start();
 		c.solve(rhs);
+		CTimer.pause();
 		
 		//Then A; Y then X
+		YTimer.start();
 		y.solve(rhs);
+		YTimer.pause();
+		
 		//System.out.println("AFTER Y: ");
 		//basis.print_values();
-		x.solve(rhs);		
+		XTimer.start();
+		x.solve(rhs);	
+		XTimer.pause();
 		
+		solveTimer.pause();
 		//basis.print_values();
 	}
 	
@@ -194,4 +255,20 @@ public class BTFLinearSystem extends LinearSystem {
 		}
 	}
 	
+	public void printTimeStats() {
+		PrintStream ps = new PrintStream(new FileOutputStream(FileDescriptor.out));
+		ps.print("\n\n\n\n\n\n\n\nMEMORY STATS:  ");
+		ps.print(memory_used);
+		ps.print("n\nTIME STATS:  ");
+		ps.print(generateTimer.getInterval() + " ");
+		ps.print(qnm.N.get(qnm.R-1) + " ");
+		ps.print(solveTimer.getInterval()/(qnm.N.get(qnm.R-1)) + " ");
+		ps.print(XTimer.getInterval()/(qnm.N.get(qnm.R-1)) + " ");
+		ps.print(YTimer.getInterval()/(qnm.N.get(qnm.R-1)) + " ");
+		ps.print(B1Timer.getInterval()/(qnm.N.get(qnm.R-1)) + " ");
+		ps.print(B2Timer.getInterval()/(qnm.N.get(qnm.R-1)) + " ");
+		ps.print(CTimer.getInterval()/(qnm.N.get(qnm.R-1)) + " ");
+		ps.print("\n\n\n ");
+		
+	}
 }

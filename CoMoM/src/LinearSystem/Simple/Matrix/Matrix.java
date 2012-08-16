@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import Basis.CoMoMBasis;
 import DataStructures.BigRational;
 import DataStructures.QNModel;
 import DataStructures.Tuple;
@@ -19,15 +20,21 @@ public abstract class Matrix {
 	 /**
 	  * Size of Square Matrix
 	  */
-	 protected int size;		 
-		 
+	 protected int size;	
+	 
+	 /**
+	  * The basis of the model under consideration.
+	  */
+	 protected CoMoMBasis basis;
+		
 	 /**
 	  * Constructor
 	  * @param qnm The Queuing Network Model under study
 	  * @param size The size of the basis (will make a matrix of size:  size x size)
 	  */
-	 public Matrix(int size) {	
+	 public Matrix(CoMoMBasis basis, int size) {	
 		 this.size = size;
+		 this.basis = basis;
 		 update_list = new LinkedList<Tuple<Integer, Integer>>();		 
 	 }
 	 
@@ -55,11 +62,10 @@ public abstract class Matrix {
 	 
 
 	 /**
-	  * Multiplies vector by the matrix
-	  * @param vector
-	  * @return
+	  * Multiplies the previous basis by the matrix 
+	  * @return rhs of linear system
 	  */
-	 public abstract BigRational[] multiply(BigRational[] vector);
+	 public abstract BigRational[] multiply();
 	 
 	 /**
 	  * Adds (row, col) to the list of of positions to be updated
