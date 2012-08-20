@@ -6,11 +6,11 @@ import Exceptions.BTFMatrixErrorException;
 import Exceptions.UndefinedMultiplyException;
 import LinearSystem.BTF.Position;
 
-public class BlockMatrix {
+public class SparseBlockMatrix {
 
 	protected CoMoMBasis basis;
 	
-	protected BigRational[][][][] matrix;
+	protected SparseBlock[][] matrix;
 	
 	protected Position position;
 	
@@ -22,7 +22,7 @@ public class BlockMatrix {
 	protected int rows_in_blocks;
 	protected int cols_in_blocks;
 
-	public BlockMatrix(CoMoMBasis basis, Position position, Position size, Position divisions) throws BTFMatrixErrorException {
+	public SparseBlockMatrix(CoMoMBasis basis, Position position, Position size, Position divisions) throws BTFMatrixErrorException {
 		this.basis = basis;
 		this.position = position;
 		this.rows = size.row;
@@ -33,7 +33,7 @@ public class BlockMatrix {
 		initialise();
 	}
 
-	public BlockMatrix(BlockMatrix block_matrix, Position divisions) {
+	public SparseBlockMatrix(SparseBlockMatrix block_matrix, Position divisions) {
 		this.basis = block_matrix.basis;
 		this.position = block_matrix.position;
 		
@@ -43,7 +43,7 @@ public class BlockMatrix {
 		this.block_rows = divisions.row;
 		this.block_cols = divisions.col;
 		
-		matrix = new BigRational[block_rows][block_cols][][];
+		matrix = new SparseBlock[block_rows][block_cols];
 		
 		for(int x = 0; x < block_rows; x++) {
 			for(int y = 0; y < block_cols; y++) {
@@ -63,11 +63,16 @@ public class BlockMatrix {
 		rows_in_blocks = rows /  block_rows;
 		cols_in_blocks = cols /  block_cols;
 		
-		matrix = new BigRational[block_rows][block_cols][][];
+		int block_starting_col = 0;
+		int block_starting_row = 0;
+		
+		matrix = new SparseBlock[block_rows][block_cols];
 		
 		for(int i = 0; i <  block_rows; i++) {
+			block_starting_row = i * rows_in_blocks;
 			for(int j = 0; j <  block_cols; j++) {
-				matrix[i][j] = new BigRational[rows_in_blocks][cols_in_blocks];
+				block_starting_col = j * cols_in_blocks;
+				matrix[i][j] = new SparseBlock(basis, new Position(position.row + block_starting_row, position.col + block_starting_col), rows_in_blocks, cols_in_blocks);
 			}
 		}
 		
@@ -86,7 +91,7 @@ public class BlockMatrix {
 		int block_col    = col / cols_in_blocks;
 		int col_in_block = col %  cols_in_blocks;
 		
-		matrix[block_row][block_col][row_in_block][col_in_block] = value.copy(); //TODO copy?
+		matrix[block_row][block_col].write(row_in_block, col_in_block, value); //TODO copy?
 	}
 	
 	/**	 * 
@@ -102,7 +107,7 @@ public class BlockMatrix {
 		int block_col    = col / cols_in_blocks;
 		int col_in_block = col %  cols_in_blocks;
 		
-		return matrix[block_row][block_col][row_in_block][col_in_block]; 
+		return matrix[block_row][block_col].get(row_in_block, col_in_block); 
 	}
 	
 	public void printRow(int row) {
@@ -122,81 +127,21 @@ public class BlockMatrix {
 		
 		if(cols + position.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");;		
 		
-		int block_starting_col = 0;
-		int block_starting_row = 0;
-		
 		for (int i = 0; i < block_rows; i++) {  		
-			block_starting_row = i * rows_in_blocks;
             for (int j = 0; j < block_cols; j++) {
-            	block_starting_col = j * cols_in_blocks;
-                block_multiply(matrix[i][j], result, position.row + block_starting_row, position.col + block_starting_col);                
+                matrix[i][j].multiply(result);                
             }
 		}		
 	}		
 	
-	private void block_multiply(BigRational[][] array, BigRational[] result, int starting_row, int starting_col) throws BTFMatrixErrorException {
-		
-		int rows = array.length;
-		int cols = array[0].length;
-		
-		if(cols + position.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");		
-
-		for (int i = 0; i < rows; i++) {           
-           	try {
-                result[starting_row + i] = multiplyBlockRow(array, i, starting_col);
-    		} catch (UndefinedMultiplyException e) {
-    			result[starting_row + i] = new BigRational(-1);
-            	result[starting_row + i].makeUndefined();    		
-            }
-		}		
-	}
-
-	private BigRational multiplyBlockRow(BigRational[][] array, int index, int starting_col) throws UndefinedMultiplyException {
-		
-		BigRational result = BigRational.ZERO;
-		int cols = array[0].length;
-		
-		for (int j = 0; j < cols; j++) {
-			if (!array[index][j].isZero()) {
-				if (basis.getNewValue(j + starting_col).isPositive()) {
-					result = result.add((array[index][j].multiply(basis.getNewValue(j + starting_col))));						
-				} else if (basis.getNewValue(j + starting_col).isUndefined()) { 
-					throw new UndefinedMultiplyException();               	                 
-				}   
-			}
-		}
-		return result;
-    }
-	
 	public void solve(BigRational[] rhs) throws BTFMatrixErrorException {
 		if(cols + position.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when solving");		
 		
-		int block_starting_col = 0;
-		int block_starting_row = 0;
-		
 		for (int i = 0; i < block_rows; i++) {  		
-			block_starting_row = i * rows_in_blocks;
             for (int j = 0; j < block_cols; j++) {
-            	block_starting_col = j * cols_in_blocks;
-                block_solve(matrix[i][j], rhs, position.row + block_starting_row, position.col + block_starting_col);                
+            	matrix[i][j].solve(rhs);                   
             }
 		}			
 	}
 	
-	private void block_solve(BigRational[][] array, BigRational[] rhs, int starting_row, int starting_col) throws BTFMatrixErrorException {
-		
-		int rows = array.length;
-		int cols = array[0].length;
-		
-		if(starting_col + cols > basis.getSize()) throw new BTFMatrixErrorException("Incompatible matrix and vector size when multiplying block");			
-
-		for (int i = 0; i < rows; i++) {               
-			try {
-	        	rhs[starting_row + i] = rhs[starting_row + i].add(multiplyBlockRow(array, i, starting_col).negate());
-			} catch (UndefinedMultiplyException e) {
-				rhs[starting_row + i] = new BigRational(-1);
-	            rhs[starting_row + i].makeUndefined();				
-			}
-		}		
-	}
 }

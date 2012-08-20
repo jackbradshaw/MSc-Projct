@@ -36,6 +36,11 @@ public class B2Block extends TopLevelBlock {
 	@Override
 	protected MacroBlock newMacroBlock(Position block_position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		return new B2MacroBlock(qnm, basis, block_position, h);
-
+	}
+	
+	public void update(int current_class_population) {
+		for(int i = 0; i < macro_blocks.length; i++) {
+			((B2MacroBlock) macro_blocks[i]).update(current_class_population);
+		}
 	}
 }

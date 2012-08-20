@@ -92,9 +92,7 @@ public class BTFLinearSystem extends LinearSystem {
 	}
 	
 	@Override
-	public void initialiseMatricesForClass(PopulationVector current_N, int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
-		
-		ComponentBlock.setCurrentClassPopulation(1);		
+	public void initialiseMatricesForClass(PopulationVector current_N, int current_class) throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {		
 		
 		//create sub-blocks for the current class
 		x  = (XBlock)   x_block.subBlock(current_class);
@@ -132,7 +130,7 @@ public class BTFLinearSystem extends LinearSystem {
 	
 	@Override
 	public void update(int current_class_population ) {
-		ComponentBlock.setCurrentClassPopulation(current_class_population);
+		b2.update(current_class_population);
 	}
 	
 	public void multiply(BigRational[] lhs_result, BigRational[] lhs, BigRational[] rhs_result, BigRational[] rhs) throws BTFMatrixErrorException {

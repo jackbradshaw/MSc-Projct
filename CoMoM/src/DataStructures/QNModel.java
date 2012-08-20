@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010, Michail Makaronidis
+ * * Copyright (C) 2010, Michail Makaronidis
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -485,7 +485,11 @@ public class QNModel {
      * @return The PopulationVector object
      */
     public PopulationVector getPopulationVector() {
-        return this.N.copy();
+    	PopulationVector to_return = new PopulationVector();
+    	for(int i = 0; i < R; i++) {
+    		to_return.add(this.N.get(i));
+    	}
+        return to_return;
     }
 
     /**
@@ -525,5 +529,14 @@ public class QNModel {
     	System.out.println("Mean Queue Lengths:");
     	MiscFunctions.printMatrix(Q);
     }
+    
+    public void setM(int m) {
+    	this.M = m;
+    }
+    
+    public void setR(int r) {
+    	this.R = r;
+    }
+
 
 }

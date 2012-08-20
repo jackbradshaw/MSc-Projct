@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2010, Michail Makaronidis
+* Copyright (C) 2010, Michail Makaronidis
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  */
 
 package Control;
+
+import java.io.PrintStream;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -123,8 +125,16 @@ public class Main {
      * The main function parses the command line arguments and initiates the
      * respective procedures.
      * @param args The command line arguments
+     * @throws Exception 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+    	/*
+    	System.setOut(new java.io.PrintStream(
+    		    new java.io.OutputStream() {
+    		       public void write(int b){}
+    		    }
+    		 ));
+    	*/
         if (args.length < 3) {
             printHelp();
             return;
@@ -149,6 +159,13 @@ public class Main {
                 }
 
                 QNModel qnm = new QNModel(filename);
+                
+                //Manual setting M and R
+                int M = Integer.parseInt(args[4]);
+                int R = Integer.parseInt(args[5]);
+                qnm.setM(M);
+                qnm.setR(R);
+                
                 QueuingNet.QNSolver c;
                 if (algorithm == 5) {
                     int matrixSize = MoMMatrixSize(qnm);
@@ -217,11 +234,12 @@ public class Main {
                 System.err.println("\nIllegal argument " + ex.getMessage());
                 /*System.out.println("\n======= DEBUGGING INFO =======");
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);*/
-            } catch (Exception ex) {
+            } catch (Throwable ex) {
                 System.err.println("\n" + ex.getMessage());
                 /*System.out.println("\n======= DEBUGGING INFO =======");
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);*/
             } finally {
+            	//System.err.println("exited");
                 System.exit(0);
             }
         }

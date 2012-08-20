@@ -35,8 +35,9 @@ public abstract class SecondaryMacroBlock extends ComponentBlock {
 
 	protected abstract Position computeDimensions(MacroBlock block_1, MacroBlock block_2);
 
-	public void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException {
-		matrix.multiply(result, input);
+	@Override
+	public void multiply(BigRational[] result) throws BTFMatrixErrorException {
+		matrix.multiply(result);
 	}
 	
 	/**

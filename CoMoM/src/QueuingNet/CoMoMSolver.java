@@ -4,6 +4,7 @@ import javax.naming.OperationNotSupportedException;
 
 import Basis.BTFCoMoMBasis;
 import Basis.CoMoMBasis;
+import DataStructures.BigRational;
 import DataStructures.PopulationVector;
 import DataStructures.QNModel;
 import Exceptions.BTFMatrixErrorException;
@@ -14,14 +15,14 @@ import LinearSystem.Simple.SimpleLinearSystem;
 
 public class CoMoMSolver extends QNSolver {
 
-private static int M,R;	
+	private  int M,R;	
 	
-	private static PopulationVector current_N;
-	private static PopulationVector target_N;
+	private PopulationVector current_N;
+	private PopulationVector target_N;
 	
-	protected static LinearSystem system; 
+	protected LinearSystem system; 
 	
-	protected static CoMoMBasis basis;
+	protected CoMoMBasis basis;
 	
 	public CoMoMSolver(QNModel qnm) throws InternalErrorException {
 		super(qnm);
@@ -38,47 +39,50 @@ private static int M,R;
     @Override
     public void computeNormalisingConstant() throws InternalErrorException, OperationNotSupportedException, InconsistentLinearSystemException, BTFMatrixErrorException {
 		
-		current_N = new PopulationVector(0,R);
-		
+		current_N = new PopulationVector(0,R);		
 				
-		for(int current_class = 1; current_class <= R; current_class++) {
-			System.out.println("Working on class " + current_class);
+		for(int _class = 1; _class <= R; _class++) {
+			System.out.println("Working on class " + _class);
 			System.out.println("Current Population: " + current_N);
 			
-			system.initialiseForClass(current_N, current_class);
+			current_N.plusOne(_class);
+			system.initialiseForClass(current_N, _class);
 		
-			solveForClass(current_class);			
+			solveForClass(_class);			
 		}						
 		
 		//Store the computed normalsing constant
-		system.storeNormalisingConstant();				
+		BigRational G = basis.getNormalisingConstant();
+		System.out.println("G = " + G);
+		qnm.setNormalisingConstant(G);			
+						
 	}
     
-    private  void solveForClass(int current_class) throws InternalErrorException, OperationNotSupportedException, InconsistentLinearSystemException, BTFMatrixErrorException {
+    private  void solveForClass(int _class) throws InternalErrorException, OperationNotSupportedException, InconsistentLinearSystemException, BTFMatrixErrorException {
 		/*
 		//If no jobs of current_class in target population, move onto next class
 		if(target_N.get(current_class - 1) == 0) {
 			return;
 		}				
 		*/
-		for(int current_class_population = current_N.get(current_class - 1); 
-				current_class_population <= target_N.get(current_class - 1); 
-				current_class_population++ ) {
+		for(int class_population = current_N.get(_class - 1); 
+				class_population <= target_N.get(_class - 1); 
+				class_population++ ) {
 			
 			
 			System.out.println("Solving for population: " + current_N);
-			System.out.println(current_class_population);
+			System.out.println(class_population);
 			
-			system.update(current_class_population);
+			system.update(class_population);
 			
 			system.solve();
 						
-			if(current_class_population < target_N.get(current_class - 1)) {
+			if(class_population < target_N.get(_class - 1)) {
 				//System.out.println("Updated A: ");
 				//A.update();  Updating now done in solver
 				//A.print();
 				
-				current_N.plusOne(current_class);
+				current_N.plusOne(_class);
 			}
 		}		
 	}

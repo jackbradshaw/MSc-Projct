@@ -28,4 +28,10 @@ public class B2MacroBlock extends MacroBlock {
 	protected MicroBlock newMicroBlock(Position block_position, int h) {
 		return new B2MicroBlock(qnm, basis, block_position, h);
 	}
+
+	public void update(int current_class_population) {
+		for(int i = 0; i < micro_blocks.length; i++) {
+			((B2MicroBlock) micro_blocks[i]).update(current_class_population);
+		}		
+	}
 }

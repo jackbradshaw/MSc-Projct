@@ -36,14 +36,20 @@ public abstract class Basis {
 	private Comparator<EnhancedVector> vector_comparator;
 	
 	/**
-	 * The basis vector of normalising constants
+	 * The vectors in which to store the basis values
 	 */
-	protected BigRational[] basis;
+	protected BigRational[] basis;	
+	protected BigRational[] previous_basis;
 	
 	/**
-	 * The previous basis vector of normalising constants in the sequence of computation
+	 * The current class being considered.
 	 */
-	protected BigRational[] previous_basis;
+	protected int current_class;
+	
+	/**
+	 * The population of the current class being considered.
+	 */
+	protected int current_class_population;
 	
 	/**
 	 * Not really sure what this is for yet, but MoM uses it...
@@ -76,7 +82,15 @@ public abstract class Basis {
 	 */	
 	public abstract void initialiseBasis() throws InternalErrorException;
 	
-	public abstract void initialiseForClass(int current_class) throws InternalErrorException;
+	/**
+	 * Initialises the basis for recustion on the current class
+	 * @param current_class The class to initialise for.
+	 * @throws InternalErrorException
+	 */
+	public void initialiseForClass(int current_class) throws InternalErrorException {
+		this.current_class = current_class;
+		this.current_class_population = 1;		
+	}
 	
 	/**
 	 * A subclass can choose a vector comparator this method sets the comparator and uses it to sort
@@ -93,7 +107,7 @@ public abstract class Basis {
 	 */
 	protected final void sort() {
 		if(vector_comparator == null) {
-			//No comparator specifed, do nothing.
+			//No comparator specified, do nothing.
 			return;
 		} else { //sort the ordering
 			Collections.sort(order, vector_comparator);
@@ -113,43 +127,39 @@ public abstract class Basis {
 	}
 	
 	/**
-	 * Returns the basis vector for mutation
-	 */
-	public BigRational[] getBasis() {
-		return basis;
-	}
-	
-	/**
-	 * Returns the previous basis vector 
-	 */
-	public BigRational[] getPreviousBasis() {
-		return previous_basis;
-	}
-	
-	/**
 	 * Computes Mean Throughput and Mean Queue Length performance indices
 	 * and stores them in the queueing network model object, qnm
 	 * @throws InternalErrorException
 	 */
 	public abstract void computePerformanceMeasures() throws InternalErrorException;
 	
+	/**
+	 * @return The current class being considered
+	 */
+	public int getCurrentClass() {
+		return current_class;
+	}
+	
+	/**
+	 * @return The population in the current class being considered
+	 */
+	public int getCurrentClassPopulation() {
+		return current_class_population;
+	}
+	
+	/**
+	 * Sets the population of the current class being considered
+	 * @param popualtion
+	 */
+	public void setCurrentClassPopulation(int population) {
+		current_class_population = population;
+	}
 	
 	/**
 	 * Returns the Normalising Constant for the current computed population  
 	 * @throws InternalErrorException 
 	 */
 	public abstract BigRational getNormalisingConstant() throws InternalErrorException;
-	
-	/**
-	 * Sets the basis vector 
-	 */
-	//TODO think about this, copies references, garbage collection....
-	public void setBasis(BigRational[] v) {
-		for(int i = 0; i < basis.length; i++) {	
-			previous_basis[i] = basis[i].copy();
-		}
-		basis = v;
-	}
 	
 	public void reset_uncomputables() {
 		for(int i = 0; i < size; i++) {
@@ -166,20 +176,21 @@ public abstract class Basis {
 	}
 	
 	public BigRational getOldValue(int index) {
-		return previous_basis[index].copy();
+		return previous_basis[index];
 	}
 	
 	public BigRational getNewValue(int index) {
-		return basis[index].copy();
+		return basis[index];
 	}
 	
 	public void setValue(BigRational value, int index) {
 		basis[index] = value.copy();
+		
 	}
 	
-	public void startBasisComputation() {
-		for(int i = 0; i < basis.length; i++) {	
-			previous_basis[i] = basis[i].copy();
-		}
+	public void startBasisComputation() {		
+		BigRational[] temp_reference = basis;
+		basis = previous_basis;
+		previous_basis = temp_reference;
 	}
 }

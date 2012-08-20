@@ -37,7 +37,7 @@ public class XBlock extends ATopLevelBlock {
 	}
 	
 	@Override
-	protected void addSecondaryMacroBlock(int h,
+	protected void newSecondaryMacroBlock(int h,
 			MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException {
 		Position block_position = new Position(block_1.getStartingRow(), block_2.getStartingCol());
 		sec_macro_blocks[h] = new XSecondaryMacroBlock(qnm, basis, block_position, block_1, block_2);

@@ -41,13 +41,7 @@ public abstract class ComponentBlock {
 	/**
 	 * The current class being considered.
 	 */
-	protected static int current_class;
-	
-	/**
-	 * The population of the current class being considered.
-	 */
-	protected static int current_class_population;
-	
+	protected int current_class;	
 	
 	/**
 	 * The base constructor for any ComponentBlock
@@ -102,14 +96,6 @@ public abstract class ComponentBlock {
 	}
 	
 	/**
-	 * Sets the field storing the population of the current class being considered.
-	 * @param population
-	 */
-	public static void setCurrentClassPopulation(int population) {
-		current_class_population = population;
-	}
-	
-	/**
 	 * Prints a line of the block if the contains the <code>row</code>.
 	 * The number of columns printed for the current row is incremented accordingly.
 	 * @param row The absolute row of the overall matrix to be printed.
@@ -154,7 +140,7 @@ public abstract class ComponentBlock {
 	 * @param input Input vector
 	 * @param result Result vector
 	 */
-	public abstract void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException;
+	public abstract void multiply(BigRational[] result) throws BTFMatrixErrorException;
 	
 	/**
 	 * TODO

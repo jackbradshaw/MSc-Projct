@@ -7,6 +7,7 @@ import DataStructures.PopulationChangeVector;
 import DataStructures.QNModel;
 import Exceptions.BTFMatrixErrorException;
 import Exceptions.InternalErrorException;
+import Exceptions.UndefinedMultiplyException;
 import LinearSystem.BTF.Position;
 
 public class YMicroBlock extends MatrixMicroBlock {
@@ -86,17 +87,12 @@ public class YMicroBlock extends MatrixMicroBlock {
 			
 		if(position.col + size.col > basis.getSize()) throw new BTFMatrixErrorException("Matrix exceeds end of vector when multiplying");
 		
-		for (int i = 0; i < size.row; i++) { 			
-			for (int j = 0; j < size.col; j++) {
-				if (!array[i][j].isZero()) {
-					if (basis.getNewValue(j + position.col).isPositive()) {
-						rhs[i + position.row] = rhs[i + position.row].add((array[i][j].multiply(basis.getNewValue(j + position.col))).negate());						
-					} else if (basis.getNewValue(j + position.col).isUndefined()) { 
-						rhs[position.row + i] = new BigRational(-1);
-                        rhs[position.row + i].makeUndefined();
-	                    break;	                 
-	                }
-	            }
+		for (int i = 0; i < size.row; i++) { 			        
+	        try {
+	        	rhs[position.row + i] = rhs[position.row + i].add(multiplyRow(i).negate());
+			} catch (UndefinedMultiplyException e) {
+				rhs[position.row + i] = new BigRational(-1);
+	            rhs[position.row + i].makeUndefined();				
 			}
 		}
 	}

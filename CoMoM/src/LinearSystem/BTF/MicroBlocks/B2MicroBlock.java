@@ -11,6 +11,12 @@ import LinearSystem.BTF.Position;
 
 public class B2MicroBlock extends MicroBlock {
 	
+	/**
+	 * The population of the current class under consideration,
+	 * this variable needs to be updated as the iteration of the current class proceeds
+	 */
+	private int current_class_population;
+	
 	public B2MicroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) {
 		super(qnm, basis, position, h);
 		computeDimensions();		
@@ -18,6 +24,7 @@ public class B2MicroBlock extends MicroBlock {
 
 	public B2MicroBlock(MicroBlock micro_block, int current_class) {
 		super(micro_block, current_class);
+		current_class_population = 0;
 	}
 
 	@Override
@@ -48,6 +55,10 @@ public class B2MicroBlock extends MicroBlock {
 			throws BTFMatrixErrorException, InternalErrorException {
 		//Do Nothing, should never be used
 		return position;
+	}
+	
+	public void update(int current_class_population) {
+		this.current_class_population = current_class_population;
 	}
 		
 	@Override
@@ -83,56 +94,47 @@ public class B2MicroBlock extends MicroBlock {
 		}
 
 	}
-
-	@Override
-	public void multiply(BigRational[] result, BigRational[] input)
-			throws BTFMatrixErrorException {
 	
+	private BigRational multiplyRow(int index) {
+		
 		int number_of_queue_constants = MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M;
 		
+		BigRational result = BigRational.ZERO;
+		
+		for(int k = 1; k <= qnm.M; k++) {
+			result = result.
+					add((basis.getOldValue(((position.row + index - number_of_queue_constants) * qnm.M) + k - 1).
+							multiply(qnm.getDemandAsBigInteger(k - 1, current_class - 1))));
+		}
+		result = result.
+				add((basis.getOldValue(position.row + index)).
+					multiply(qnm.getDelayAsBigRational(current_class - 1)));
+		
+		return result;
+	}
+	
+	@Override
+	public void multiply(BigRational[] result)
+			throws BTFMatrixErrorException {
+		
 		for(int i = 0; i < size.row; i++) {
-			
-			//System.out.println("result: " + result[position.row + i]);
-			for(int k = 1; k <= qnm.M; k++) {
-				result[position.row + i] = result[position.row + i].
-						add((input[((position.row + i - number_of_queue_constants) * qnm.M) + k - 1].
-								multiply(qnm.getDemandAsBigInteger(k - 1, current_class - 1))));
-			}
-			result[position.row + i] = result[position.row + i].
-					add((input[position.row + i]).
-						multiply(qnm.getDelayAsBigRational(current_class - 1)));
+			result[position.row + i] = multiplyRow(i);
 		}
 	}
-
+	
 	@Override
 	public void solve(BigRational[] rhs) {
-		int number_of_queue_constants = MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M;
 		
 		BigRational value;
 		
 		for(int i = 0; i < size.row; i++) {
 			
-			basis.setValue(BigRational.ZERO, position.row + i);
-	
-			for(int k = 1; k <= qnm.M; k++) {
-				value = basis.getNewValue(position.row + i).
-						add((basis.getOldValue(((position.row + i - number_of_queue_constants) * qnm.M) + k - 1).
-								multiply(qnm.getDemandAsBigInteger(k - 1, current_class - 1))));
-				
-				basis.setValue(value, position.row + i);
-			}
-			value = basis.getNewValue(position.row + i).
-					add((basis.getOldValue(position.row + i)).
-						multiply(qnm.getDelayAsBigRational(current_class - 1)));
-			
-			basis.setValue(value, position.row + i);
+			value = multiplyRow(i);
 			
 			//Divide by N_r in A
-			value = basis.getNewValue(position.row + i).divide(new BigRational(current_class_population));
+			value = value.divide(new BigRational(current_class_population));
 			basis.setValue(value, position.row + i);
 		
-		}
-		
+		}		
 	}
-
 }

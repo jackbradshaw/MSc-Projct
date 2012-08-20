@@ -46,11 +46,11 @@ public class CMicroBlock extends MicroBlock {
 		
 		_class = n.RightMostNonZero() + 1;
 		
-		int number_of_n_s = MiscFunctions.binomialCoefficient(qnm.M, h) ;
+		int number_of_ns = MiscFunctions.binomialCoefficient(qnm.M, h) ;
 		
 		
 		//Loop over all n's contained in this microblock
-		for(int i = 0; i < number_of_n_s ; i++) {
+		for(int i = 0; i < number_of_ns ; i++) {
 			n = basis.getPopulationChangeVector(vector_index++); 
 			
 			//Loop over all queues (including no queue)
@@ -89,8 +89,13 @@ public class CMicroBlock extends MicroBlock {
 		return position;
 	}
 	
+	
+	private BigRational carryForwardValue(int index) {
+		return basis.getOldValue(array[index][1]).copy();		
+	}
+	
 	@Override
-	public void multiply(BigRational[] result, BigRational[] input)
+	public void multiply(BigRational[] result)
 			throws BTFMatrixErrorException {
 		//negative population, constant is zero
 		if(_class > current_class) {
@@ -100,7 +105,7 @@ public class CMicroBlock extends MicroBlock {
 		//carry forward
 		} else {
 			for(int i = 0; i < size.row; i++) {				
-				result[array[i][0]] = input[array[i][1]].copy();
+				result[array[i][0]] = carryForwardValue(i);
 			}
 		}
 	}
@@ -115,7 +120,7 @@ public class CMicroBlock extends MicroBlock {
 		//carry forward
 		} else {
 			for(int i = 0; i < size.row; i++) {	
-				basis.setValue( basis.getOldValue(array[i][1]), array[i][0]);			
+				basis.setValue(  carryForwardValue(i), array[i][0]);			
 			}
 		}
 	}

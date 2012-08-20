@@ -87,7 +87,7 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 		sec_macro_blocks = new SecondaryMacroBlock[macro_blocks.length - 1];
 		//Instantiate secondary macro blocks		
 		for(int h = 0; h < macro_blocks.length - 1; h++) {				
-			addSecondaryMacroBlock(h, macro_blocks[h], macro_blocks[h+1]);			
+			newSecondaryMacroBlock(h, macro_blocks[h], macro_blocks[h+1]);			
 		}
 	}
 	
@@ -115,7 +115,7 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	 * @param block_2
 	 * @throws BTFMatrixErrorException
 	 */
-	protected abstract void addSecondaryMacroBlock(int h, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException;
+	protected abstract void newSecondaryMacroBlock(int h, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException;
 	
 	/*
 	 * OVERRIDEN METHODS FROM COMPONENT BLOCK...
@@ -139,14 +139,14 @@ public abstract class ATopLevelBlock extends TopLevelBlock {
 	}
 	
 	@Override
-	public void multiply(BigRational[] result, BigRational[] input) throws BTFMatrixErrorException {
+	public void multiply(BigRational[] result) throws BTFMatrixErrorException {
 		
 		//multiply macro_blocks
-		super.multiply(result, input);
+		super.multiply(result);
 		
 		//Also multiply sec_macro_blocks
 		for(int i = 0; i < sec_macro_blocks.length; i++) {
-			sec_macro_blocks[i].multiply(result, input);
+			sec_macro_blocks[i].multiply(result);
 		}
 	}
 	

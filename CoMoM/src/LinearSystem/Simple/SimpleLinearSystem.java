@@ -6,6 +6,7 @@ import javax.naming.OperationNotSupportedException;
 
 import Utilities.MiscFunctions;
 
+import Basis.BTFCoMoMBasis;
 import Basis.CoMoMBasis;
 import Basis.CoMoMReorderingBasis;
 import DataStructures.BigRational;
@@ -35,15 +36,16 @@ private static StandardMatrix A, B;
 			throws InternalErrorException {
 		super(qnm, basis);
 		
-		basis = new CoMoMReorderingBasis(qnm);
+		//basis = new CoMoMReorderingBasis(qnm);
+		//basis = new BTFCoMoMBasis(qnm);
 	
 		this.num_threads = num_threads;
 		
 		M = qnm.M;
 		R = qnm.R;
 		
-		A = new StandardMatrix(basis.getSize());
-		B = new StandardMatrix(basis.getSize());
+		A = new StandardMatrix(basis, basis.getSize());
+		B = new StandardMatrix(basis, basis.getSize());
 		
 		if (num_threads == 1) {
             solver = new SimpleSolver();
@@ -62,10 +64,16 @@ private static StandardMatrix A, B;
 			InconsistentLinearSystemException, InternalErrorException,
 			BTFMatrixErrorException {
 		
-		System.out.println("Solving System...\n");
-		BigRational[] sysB  = B.multiply(basis.getBasis());
+		basis.startBasisComputation();
 		
-		basis.setBasis(solver.solve(sysB));
+		System.out.println("Solving System...\n");
+		BigRational[] sysB  = B.multiply();
+		
+		BigRational[] result = solver.solve(sysB);
+		
+		for(int i = 0; i < basis.getSize(); i++) {
+			basis.setValue(result[i], i);
+		}
 	}
 
 	@Override
