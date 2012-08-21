@@ -34,8 +34,8 @@ public class CoMoMBasisTest {
 
 	@Before
 	public void setUp() throws Exception {
-		qnm = new QNModel("jack_test.txt");
-		basis = new CoMoMBasis(qnm);
+		qnm = new QNModel("src\\Basis\\basis_test_model.txt");
+		basis = new BTFCoMoMBasis(qnm);
 	}
 
 	@After
@@ -73,6 +73,7 @@ public class CoMoMBasisTest {
 	}
 	
 	/**
+	 * Test BTF indexOf.
 	 * Warning: Test order specific, but method its test is not
 	 */
 	@Test
@@ -82,52 +83,24 @@ public class CoMoMBasisTest {
 		try {
 			//n = [0,0]
 			assertEquals("Error at no queues added!", 6, basis.indexOf(n,0));
-			assertEquals("Error at queue 2 added!",   3, basis.indexOf(n,2));
+			assertEquals("Error at queue 2 added!",   1, basis.indexOf(n,2));
 			assertEquals("Error at queue 1 added!",   0, basis.indexOf(n,1));			
 			
 			n.plusOne(1);
 			//n = [1,0]
 			assertEquals("Error at no queues added!", 7, basis.indexOf(n,0));
-			assertEquals("Error at queue 2 added!",   4, basis.indexOf(n,2));
-			assertEquals("Error at queue 1 added!",   1, basis.indexOf(n,1));
+			assertEquals("Error at queue 2 added!",   3, basis.indexOf(n,2));
+			assertEquals("Error at queue 1 added!",   2, basis.indexOf(n,1));
 			
 			n.plusOne(1);
 			//n = [2,0]
 			assertEquals("Error at no queues added!", 8, basis.indexOf(n,0));
 			assertEquals("Error at queue 2 added!",   5, basis.indexOf(n,2));
-			assertEquals("Error at queue 1 added!",   2, basis.indexOf(n,1));
+			assertEquals("Error at queue 1 added!",   4, basis.indexOf(n,1));
 			
 			
 		} catch (InternalErrorException e) {
 			e.printStackTrace();
 		}		
 	}
-	
-	/**
-	 * Warning: Test order specific, but method its test is not
-	 */
-	/*
-	@Test 
-	public void testInitialiseBasis() {
-		try {
-			int size = MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M);
-			basis.initialiseBasis();
-			BigRational[] values = basis.getBasis();		
-			PopulationChangeVector v; 
-			for(int i = 0; i < values.length; i++) {
-				if(values[i].equals(BigRational.ONE)) {
-					v = basis.getPopulationChangeVector(i % (size));
-					assertEquals("Non-zero population constant initialised to 1", 0, v.sum()); 
-				} else if(values[i].equals(BigRational.ZERO)) {
-					v = basis.getPopulationChangeVector(i % (size));
-					assertTrue("Zero population constant initialised to 1", v.sum() > 0); 
-				} else {
-					fail("Initial condition not zero or one!");
-				}
-			}		
-		} catch (InternalErrorException e) {		
-			e.printStackTrace();
-		}
-	}
-	*/
 }

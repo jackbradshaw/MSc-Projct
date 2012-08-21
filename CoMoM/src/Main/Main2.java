@@ -89,7 +89,7 @@ public class Main2 {
 		}						
 		
 		//Store the computed normalsing constant
-		system.storeNormalisingConstant();			
+		//system.storeNormalisingConstant();			
 		
 	}
 	

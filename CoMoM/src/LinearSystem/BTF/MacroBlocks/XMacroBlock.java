@@ -24,9 +24,9 @@ public class XMacroBlock extends MacroBlock {
 		return new XMacroBlock(this, current_class);
 	}
 	
-	public void LUPDecompose() throws InconsistentLinearSystemException {
+	public void LUPDecompose(boolean in_place) throws InconsistentLinearSystemException {
 		for(int i = 0; i < micro_blocks.length; i++) {
-			((XMicroBlock) micro_blocks[i]).LUPDecompose();
+			((XMicroBlock) micro_blocks[i]).LUPDecompose(in_place);
 		}
 	}
 	

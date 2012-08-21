@@ -47,7 +47,7 @@ public class SparseBlock {
 	
 	public void multiply(BigRational[] result) {
 		 for(int i = 0; i < rows; i++) {
-			 result[position.row + i] = basis.getOldValue(position.col + columns[i]).multiply(values[i]);
+			 result[position.row + i] = result[position.row + i].add(basis.getNewValue(position.col + columns[i]).multiply(values[i]));
 		 }
 	} 
 

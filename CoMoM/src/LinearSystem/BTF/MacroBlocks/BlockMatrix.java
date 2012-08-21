@@ -143,7 +143,7 @@ public class BlockMatrix {
 
 		for (int i = 0; i < rows; i++) {           
            	try {
-                result[starting_row + i] = multiplyBlockRow(array, i, starting_col);
+                result[starting_row + i] = result[starting_row + i].add(multiplyBlockRow(array, i, starting_col));
     		} catch (UndefinedMultiplyException e) {
     			result[starting_row + i] = new BigRational(-1);
             	result[starting_row + i].makeUndefined();    		

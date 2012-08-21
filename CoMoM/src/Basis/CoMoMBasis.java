@@ -112,6 +112,7 @@ public class CoMoMBasis extends Basis{
 		// Negative populations have normalising constant equal to ZERO
 		for( int i = 0 ; i < size; i++) {
 			basis[i] = BigRational.ZERO;
+			previous_basis[i] = BigRational.ZERO;
 		}
 		
 		// Zero populations have normalising constant equal to ONE

@@ -99,6 +99,7 @@ public class CMicroBlock extends MicroBlock {
 			throws BTFMatrixErrorException {
 		//negative population, constant is zero
 		if(_class > current_class) {
+			System.out.println("inserting zero");
 			for(int i = 0; i < size.row; i++) {
 				result[array[i][0]] = BigRational.ZERO;
 			}

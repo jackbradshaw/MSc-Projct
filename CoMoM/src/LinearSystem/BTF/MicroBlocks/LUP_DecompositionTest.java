@@ -46,13 +46,13 @@ public class LUP_DecompositionTest {
 			};
 		Position zero_zero = new Position(0,0);
 		
-		LUP_Decomposition LUP = new LUP_Decomposition(basis, zero_zero, A);
+		LUP_Decomposition LUP = new LUP_Decomposition(basis, zero_zero, A, false);
 		
 		BigRational[] b = {new BigRational(1), new BigRational(2), new BigRational(3), new BigRational(4)};
 		
 		MiscFunctions.printMatrix(b);
 		
-		BigRational[] x = LUP.solve2(b);
+		BigRational[] x = LUP.test_solve(b);
 		
 		MiscFunctions.printMatrix(x);
 		

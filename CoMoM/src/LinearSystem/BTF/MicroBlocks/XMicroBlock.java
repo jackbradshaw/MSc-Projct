@@ -40,8 +40,12 @@ public class XMicroBlock extends MatrixMicroBlock {
 		return new XMicroBlock(this, current_class);
 	}
 	
-	public void LUPDecompose() throws InconsistentLinearSystemException {
-		LUP = new LUP_Decomposition(basis, position, array);
+	public void LUPDecompose(boolean in_place) throws InconsistentLinearSystemException {
+		if(in_place) {
+			LUP = new LUP_Decomposition(basis, position, array, true);
+		}else{
+			LUP = new LUP_Decomposition(basis, position, array, false);
+		}
 	}
 
 	@Override

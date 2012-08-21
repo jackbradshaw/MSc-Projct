@@ -236,7 +236,9 @@ public class Main {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);*/
             } catch (Throwable ex) {
                 System.err.println("\n" + ex.getMessage());
-                /*System.out.println("\n======= DEBUGGING INFO =======");
+                ex.printStackTrace();
+                /*
+                System.out.println("\n======= DEBUGGING INFO =======");
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);*/
             } finally {
             	//System.err.println("exited");

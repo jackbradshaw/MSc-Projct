@@ -66,18 +66,18 @@ public class ConvolutionSolver extends RecursiveSolver {
 
                 int k = m.findFirstNonZeroElement();
 
-                //Create Î”m-1
+                //Create ÃŽâ€�m-1
                 m.minusOne(k + 1);
                 toRet = compute(m, p);
-                // restore Î”m
+                // restore ÃŽâ€�m
                 m.restore();
 
                 for (int r = 0; r < qnm.R; r++) {
                     if (p.get(r) > 0) { // This is the point that differs when a MoM instantiation is performed.
-                        // Create Î�-1r
+                        // Create ÃŽï¿½-1r
                         p.minusOne(r + 1);
                         BigRational toAdd = compute(m, p);
-                        // restore Î�-1r
+                        // restore ÃŽï¿½-1r
                         p.restore();
                         toAdd = toAdd.multiply(qnm.getDemandAsBigRational(k, r));
                         toRet = toRet.add(toAdd);
@@ -115,11 +115,12 @@ public class ConvolutionSolver extends RecursiveSolver {
         qnm.setNormalisingConstant(G);
     }
     
+    /*
     /**
      * Added by Jack Bradshaw
      * @param basis The basis to initialise
      * @throws InternalErrorException
-     */
+     
     public void initialiseFirstClass(CoMoMBasis basis) throws InternalErrorException {
     	
     	PopulationVector N = qnm.getPopulationVector();
@@ -149,9 +150,10 @@ public class ConvolutionSolver extends RecursiveSolver {
     			
     			basis_values[basis.indexOf(n, m)] = G;
     			    			
-    		}
+    		} 
     	}
     	
-    	basis.setBasis(basis_values);
+    //	basis.setBasis(basis_values);
     }
+    */
 }

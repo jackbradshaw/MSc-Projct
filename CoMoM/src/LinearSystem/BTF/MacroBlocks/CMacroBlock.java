@@ -12,7 +12,7 @@ public class CMacroBlock extends MacroBlock {
 	
 	public CMacroBlock(QNModel qnm, CoMoMBasis basis, Position position, int h) throws InternalErrorException, InconsistentLinearSystemException {
 		super(qnm, basis, position, h);		
-		selection_policy = new TypeTwoBlocks(qnm, this); 
+		selection_policy = new TypeTwoABlocks(qnm, this); 
 	}
 
 	public CMacroBlock(MacroBlock full_block, int current_class) {

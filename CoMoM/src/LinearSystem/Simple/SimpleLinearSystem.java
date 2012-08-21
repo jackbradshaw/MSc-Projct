@@ -56,7 +56,7 @@ private static StandardMatrix A, B;
 
 	@Override
 	public void update(int current_class_population) {
-		solver.goToULevel(current_class_population - 1);		
+		solver.goToULevel(current_class_population-1);		
 	}
 
 	@Override
@@ -84,9 +84,9 @@ private static StandardMatrix A, B;
 		
 		System.out.println("Intialising A and B:");
 		System.out.println("A:");
-		A.print();
+		//A.print();
 		System.out.println("B:");
-		B.print();
+		//B.print();
 		
 		 Integer maxA = getMaxAElement();
 	     Integer val = basis.getSize();
@@ -188,6 +188,18 @@ private static StandardMatrix A, B;
 		   		}
 		   	}
 		}
+	 
+	 /**
+	  * Multiply methods for testing purposes
+	  */
+	 public BigRational[] multiplyrhs() throws BTFMatrixErrorException {
+		 return B.multiply();		 
+	 }
+	 
+	 public BigRational[] multiplylhs() throws BTFMatrixErrorException {
+		 return A.multiply();
+		 
+	 }
 	 
 	 private int getMaxAElement() throws OperationNotSupportedException {
 		 int max = qnm.getMaxModelValue();

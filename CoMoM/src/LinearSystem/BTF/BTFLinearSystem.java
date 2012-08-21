@@ -37,33 +37,51 @@ public class BTFLinearSystem extends LinearSystem {
 	//Vector for storing intermediate solution
 	BigRational[] rhs;
 	
+	/**
+	 * Boolean to indicate whether LUP decomposition should happen in place or not.
+	 * The latter is useful for debugging and testing purposes, allowing the original matrix to be inspected.
+	 */
+	private boolean in_place = true;
+	
 	public BTFLinearSystem(QNModel qnm, CoMoMBasis basis)
 			throws InternalErrorException, BTFMatrixErrorException, InconsistentLinearSystemException {
 		
 		super(qnm, basis);		
 		
+		initialise();
+	}
+	
+	public BTFLinearSystem(QNModel qnm, CoMoMBasis basis, boolean in_place)
+			throws InternalErrorException, BTFMatrixErrorException, InconsistentLinearSystemException {
+		
+		super(qnm, basis);		
+		this.in_place = in_place;
+		initialise();
+	}
+	
+	private void initialise() throws BTFMatrixErrorException, InternalErrorException, InconsistentLinearSystemException {
 		//Create and initialise the component blocks for the final class
 		x_block  = new XBlock (qnm, basis);
 		x_block.initialise();
-		
+				
 		y_block  = new YBlock (qnm, basis);
 		y_block.initialise();
-		
+				
 		b1_block = new B1Block(qnm, basis);
 		b1_block.initialise();
-		
+				
 		b2_block = new B2Block(qnm, basis);
 		b2_block.initialise();
-		
+				
 		c_block  = new CBlock (qnm, basis);	
 		c_block.initialise();
-		
+				
 		//Add PCs and CEs to the matrices 
 		generate();
-		
+				
 		//Create rhs vector
 		rhs = new BigRational[basis.getSize()];
-		
+				
 		printFullMatrices();
 	}
 	
@@ -88,7 +106,7 @@ public class BTFLinearSystem extends LinearSystem {
 	   			}   			    			    			
 	   		}
 	   	}
-	   	x_block.LUPDecompose();
+	   	x_block.LUPDecompose(in_place);
 	}
 	
 	@Override
@@ -133,33 +151,24 @@ public class BTFLinearSystem extends LinearSystem {
 		b2.update(current_class_population);
 	}
 	
-	public void multiply(BigRational[] lhs_result, BigRational[] lhs, BigRational[] rhs_result, BigRational[] rhs) throws BTFMatrixErrorException {
+	public void multiply(BigRational[] lhs_result,  BigRational[] rhs_result) throws BTFMatrixErrorException {
 		
 		//Multiply each component
-		x.multiply(lhs_result, lhs);
-		y.multiply(lhs_result, lhs);
-		b1.multiply(rhs_result, rhs);
-		b2.multiply(rhs_result, rhs);
-		c.multiply(rhs_result, rhs);	
+		x.multiply(lhs_result);
+		y.multiply(lhs_result);
+		b1.multiply(rhs_result);
+		b2.multiply(rhs_result);
+		c.multiply(lhs_result);			
 		
-		
-		//achieves identity rows
+		//achieves identity rows in A
 		for(int i = MiscFunctions.binomialCoefficient(qnm.M + qnm.R - 1 , qnm.M) * qnm.M; i < basis.getSize(); i++) {
-			lhs_result[i] = lhs[i].copy();
+			lhs_result[i] = basis.getNewValue(i).copy();
 		}
-		/*
-		for(int i = 0; i < basis.getSize(); i++) {
-			lhs_result[i] = lhs[i].copy();
-		}
-		b1.multiply(rhs_result, rhs);
-		b2.multiply(rhs_result, rhs);
-		c.multiply(rhs_result, rhs);
-		*/
 	}
 	
 	private void printFullMatrices() {
 		print(x_block, y_block, b1_block, b2_block, c_block);
-	}
+	} 
 	
 	private void printWorkingMatrices() {
 		print(x, y, b1, b2,c);

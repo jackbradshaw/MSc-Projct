@@ -66,7 +66,7 @@ public abstract class MatrixMicroBlock extends MicroBlock {
 		
 		for (int i = 0; i < size.row; i++) {           
             try {
-            	result[position.row + i] = multiplyRow(i);
+            	result[position.row + i] = result[position.row + i].add(multiplyRow(i));
 			} catch (UndefinedMultiplyException e) {
 				result[position.row + i] = new BigRational(-1);
                 result[position.row + i].makeUndefined();

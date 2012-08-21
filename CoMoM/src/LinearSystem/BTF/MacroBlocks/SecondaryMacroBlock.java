@@ -10,6 +10,7 @@ import LinearSystem.BTF.Position;
 public abstract class SecondaryMacroBlock extends ComponentBlock {
 
 	protected BlockMatrix matrix;
+	//protected SparseBlockMatrix matrix;
 	
 	protected SecondaryMacroBlock(QNModel qnm, CoMoMBasis basis, Position position, MacroBlock block_1, MacroBlock block_2) throws BTFMatrixErrorException {
 		super(qnm, basis, position);
@@ -29,6 +30,7 @@ public abstract class SecondaryMacroBlock extends ComponentBlock {
 		size = computeDimensions(block_1, block_2);
 		Position divisions = computeDivisions(block_1, block_2);
 		matrix = new BlockMatrix(basis, position, size, divisions);
+		//matrix = new SparseBlockMatrix(basis, position, size, divisions);
 	}
 		
 	protected abstract Position computeDivisions(MacroBlock block_1, MacroBlock block_2);
@@ -71,7 +73,10 @@ public abstract class SecondaryMacroBlock extends ComponentBlock {
 		
 		//Take the required 'top corner' of the full block's matrix
 		Position divisions = computeDivisions(macro_block_1, macro_block_2);
+		
 		sub_block.matrix = new BlockMatrix(matrix, divisions);
+		//sub_block.matrix = new SparseBlockMatrix(matrix, divisions);
+		
 		sub_block.size = matrix.getSize();
 		
 		return sub_block;

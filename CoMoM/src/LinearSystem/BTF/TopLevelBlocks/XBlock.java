@@ -43,9 +43,9 @@ public class XBlock extends ATopLevelBlock {
 		sec_macro_blocks[h] = new XSecondaryMacroBlock(qnm, basis, block_position, block_1, block_2);
 	}
 	
-	public void LUPDecompose() throws InconsistentLinearSystemException {
+	public void LUPDecompose(boolean in_place) throws InconsistentLinearSystemException {
 		for(int i = 0; i < macro_blocks.length; i++) {
-			((XMacroBlock) macro_blocks[i]).LUPDecompose();
+			((XMacroBlock) macro_blocks[i]).LUPDecompose(in_place);
 		}
 	}
 	
